@@ -79,6 +79,7 @@ rects.enter().append("rect")
 $('svg rect').tipsy({ 
     gravity: 'n',
     html: true,
+    trigger: 'manual',
     title: function() {
       var d = this.__data__, letter = d.val;
       return letter; 
