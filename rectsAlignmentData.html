@@ -24,14 +24,25 @@ var stringArray = $.ajax({
 // Remove last element, which is an empty string
 stringArray.splice(stringArray.length - 1,1)
 
+// Get dimensions
+var nRow = stringArray.length
+var nCol = stringArray[0].length	// Assuming all rows have equal # of columns
+
+// One-dimensionalize and add attributes indicating position
+var stringArray1D = []
+
+for (i = 0; i < nRow; i++){
+    for(j = 0; j < nCol; j++){
+        stringArray1D.push({val: stringArray[i][j], row: i, col: j})
+    }
+}
+
 // SVG sizing
 var margin = {top: 20, right: 20, bottom: 30, left: 40}
 var width = 960 - margin.left - margin.right
 var height = 500 - margin.top - margin.bottom
 
-// Grid sizing
-var nRow = stringArray.length
-var nCol = stringArray[0].length	// Assuming all rows have equal # of columns
+// Rectangle sizing
 var rWidth = width/nCol
 var rHeight = height/nRow
 
@@ -47,13 +58,13 @@ var svg = d3.select("body").append("svg")
 
 // Create grid
 var rects = svg.selectAll("rect")
-    .data(stringArray)
+    .data(stringArray1D)
 
 rects.enter().append("rect")
-    .attr("x", function(d, i) { return x(i); })
+    .attr("x", function(d, i) { return x(d.row); })
     .attr("width", rWidth)
-    .attr("y", function(d, i) { return y(i); })
+    .attr("y", function(d, i) { return y(d.col); })
     .attr("height", rHeight)
-    .attr("fill", "black")
+    .attr("fill", function(d, i) { return colormap(d.val); })
 </script>
 </html>
