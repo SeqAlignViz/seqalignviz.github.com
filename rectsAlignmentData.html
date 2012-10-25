@@ -45,5 +45,15 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 
+// Create grid
+var rects = svg.selectAll("rect")
+    .data(stringArray)
+
+rects.enter().append("rect")
+    .attr("x", function(d, i) { return x(d[i]); })
+    .attr("width", rWidth)
+    .attr("y", function(d) { return y(d[0]); })
+    .attr("height", rHeight)
+    .attr("fill", "black")
 </script>
 </html>
