@@ -1,0 +1,13 @@
+<html>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+var stringData = $.ajax({
+                    url: "http://seqalignviz.github.com/test.aln",
+                    async: false
+                 }).responseText;
+
+  //Split values of string data
+  var stringArray = stringData.split(",");
+  alert("Data Loaded: " + stringData);
+</script>
+</html>
