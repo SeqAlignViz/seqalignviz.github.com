@@ -73,8 +73,8 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
-    .on("mousedown", function() { $('#test').html('hi') } )
-    .on("mouseup", function() { $('#test').html('') })
+    .on("mousedown", function() { $("svg rect").tipsy("hide"); } )
+    .on("mouseup", function() { $("svg rect").tipsy("show"); })
 
 $('svg rect').tipsy({ 
     gravity: 'n',
