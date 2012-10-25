@@ -50,9 +50,9 @@ var rects = svg.selectAll("rect")
     .data(stringArray)
 
 rects.enter().append("rect")
-    .attr("x", function(d, i) { return x(d[i]); })
+    .attr("x", function(d, i) { return x(i); })
     .attr("width", rWidth)
-    .attr("y", function(d) { return y(d[0]); })
+    .attr("y", function(d) { return y(i); })
     .attr("height", rHeight)
     .attr("fill", "black")
 </script>
