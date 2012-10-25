@@ -73,8 +73,9 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
+    .attr("title", function(d, i) { return d.val; })
 
-$('svg rect').tipsy({ 
+/*$('svg rect').tipsy({ 
     gravity: 'n',
     html: true,
     trigger: 'manual',
@@ -82,9 +83,9 @@ $('svg rect').tipsy({
       var d = this.__data__, letter = d.val;
       return letter; 
     }
-});
+});*/
 
-$("svg rect").tipsy("show")
+$("svg rect").tipsy({trigger: "manual"})
 
 rects
     .on("mousedown", function() { $("#test").html("hide"); } )
