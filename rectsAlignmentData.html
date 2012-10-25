@@ -52,7 +52,7 @@ var rects = svg.selectAll("rect")
 rects.enter().append("rect")
     .attr("x", function(d, i) { return x(i); })
     .attr("width", rWidth)
-    .attr("y", function(d) { return y(i); })
+    .attr("y", function(d, i) { return y(i); })
     .attr("height", rHeight)
     .attr("fill", "black")
 </script>
