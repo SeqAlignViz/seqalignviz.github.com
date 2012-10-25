@@ -82,11 +82,12 @@ $('svg rect').tipsy({
       var d = this.__data__, letter = d.val;
       return letter; 
     }
+});
+
 rects
     .on("mousedown", function() { $("#test").html("hide"); } )
     .on("mouseup", function() { $("#test").html("show"); })
 //    .on("mousedown", function() { $("svg rect").tipsy("hide"); } )
 //    .on("mouseup", function() { $("svg rect").tipsy("show"); })
-});
 </script>
 </html>
