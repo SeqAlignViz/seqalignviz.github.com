@@ -14,6 +14,8 @@ generic-family:"Monospace";
 <body>
 </body>
 <script>
+
+// Get alignment data
 var stringArray = $.ajax({
                     url: "http://seqalignviz.github.com/test.aln",
                     async: false
@@ -21,6 +23,27 @@ var stringArray = $.ajax({
 
 // Remove last element, which is an empty string
 stringArray.splice(stringArray.length - 1,1)
+
+// SVG sizing
+var margin = {top: 20, right: 20, bottom: 30, left: 40}
+var width = 960 - margin.left - margin.right
+var height = 500 - margin.top - margin.bottom
+
+// Grid sizing
+var nRow = stringArray.length
+var nCol = stringArray[0].length	// Assuming all rows have equal # of columns
+var rWidth = width/nCol
+var rHeight = height/nRow
+
+// D3 mappings/scalings
+var x = d3.scale.linear().domain([0, nCol]).range([0, width])
+var y = d3.scale.linear().domain([0, nRow]).range([0, height])
+var colormap = d3.scale.ordinal().domain(["A", "T", "C", "G", "."]).range(["red", "green", "blue", "black", "white"])
+
+// Create svg
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
 
 </script>
 </html>
