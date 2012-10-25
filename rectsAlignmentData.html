@@ -10,6 +10,8 @@ generic-family:"Monospace";
 </style>
 <script src="jquery-1.8.2.min.js"></script>
 <script src="d3.v2.min.js"></script>
+<script src="jquery.tipsy.js"></script>
+<link href="tipsy.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 </body>
@@ -69,5 +71,14 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
+
+$('svg rect').tipsy({ 
+    gravity: 'w', 
+    html: true, 
+    title: function() {
+      var d = this.__data__, letter = d.val;
+      return letter; 
+    }
+});
 </script>
 </html>
