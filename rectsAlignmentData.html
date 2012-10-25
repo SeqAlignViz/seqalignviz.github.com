@@ -14,13 +14,12 @@ generic-family:"Monospace";
 <body>
 </body>
 <script>
-var stringData = $.ajax({
+var stringArray = $.ajax({
                     url: "http://seqalignviz.github.com/test.aln",
                     async: false
-                 }).responseText;
+                 }).responseText.split("\n");
 
-  //Split values of string data
-var stringArray = stringData.split("\n");
+//var stringArray = stringData.split("\n");
 
 </script>
 </html>
