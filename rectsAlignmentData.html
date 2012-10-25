@@ -88,9 +88,9 @@ rects.enter().append("rect")
 $("svg rect").tipsy({trigger: "manual"})
 
 rects
-    .on("mousedown", function() { $("#test").html("hide"); } )
-    .on("mouseup", function() { $("#test").html("show"); })
-//    .on("mousedown", function() { $("svg rect").tipsy("hide"); } )
-//    .on("mouseup", function() { $("svg rect").tipsy("show"); })
+//    .on("mousedown", function() { $("#test").html("hide"); } )
+//    .on("mouseup", function() { $("#test").html("show"); })
+    .on("mousedown", function() { $("svg rect").tipsy("hide"); } )
+    .on("mouseup", function() { $("svg rect").tipsy("show"); })
 </script>
 </html>
