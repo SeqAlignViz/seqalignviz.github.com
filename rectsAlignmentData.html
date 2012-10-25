@@ -84,6 +84,8 @@ $('svg rect').tipsy({
     }
 });
 
+$("svg rect").tipsy("show")
+
 rects
     .on("mousedown", function() { $("#test").html("hide"); } )
     .on("mouseup", function() { $("#test").html("show"); })
