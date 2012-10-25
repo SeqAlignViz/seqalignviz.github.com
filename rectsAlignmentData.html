@@ -19,7 +19,8 @@ var stringArray = $.ajax({
                     async: false
                  }).responseText.split("\n");
 
-//var stringArray = stringData.split("\n");
+// Remove last element, which is an empty string
+stringArray.splice(stringArray.length - 1,1)
 
 </script>
 </html>
