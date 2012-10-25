@@ -74,6 +74,7 @@ rects.enter().append("rect")
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
     .on("onmousedown", $('#test').html('hi'))
+    .on("onmouseup", $('#test').html(''))
 
 $('svg rect').tipsy({ 
     gravity: 'n',
