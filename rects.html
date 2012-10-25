@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>D3 Playground</title>
+<script src = "d3.v2.js"></script>
+<style>
+path {
+ fill: none;
+ stroke: steelblue;
+ stroke-width: 3px;
+}
+.bar {
+ fill: steelblue;
+}
+</style>
+</head>
+<body>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40}
+var width = 960 - margin.left - margin.right
+var height = 500 - margin.top - margin.bottom
+
+var nRow = 100
+var nCol = 800
+var rWidth = width/nCol
+var rHeight = height/nRow
+
+var x = d3.scale.linear().domain([0, nCol]).range([0, width])
+var y = d3.scale.linear().domain([0, nRow]).range([0, height])
+var colormap = ["red", "green", "blue", "black"]
+
+var brush = d3.svg.brush()
+    .x(x)
+    .on("brush", brush);
+
+var area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return x(d[1]); })
+    .y0(height)
+    .y1(function(d) { return y(d[0]); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+//    .call(d3.behavior.zoom().on("zoom", redraw))
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var data = []
+
+for(i = 0; i < nRow; i++){
+	for(j = 0; j < nCol; j++){
+		data[i*nCol + j] = [i, j, j % 4]
+	}
+}
+
+svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("x", function(d) { return x(d[1]); })
+      .attr("width", rWidth)
+      .attr("y", function(d) { return y(d[0]); })
+      .attr("height", rHeight)
+      .attr("fill", function(d){ return colormap[d[2]] ; })
+
+</script>
+</body>
+</html>
