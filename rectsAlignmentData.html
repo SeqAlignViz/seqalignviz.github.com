@@ -73,7 +73,7 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
-    .on("onmousedown", $('div test').text('hi'))
+    .on("onmousedown", $('#test').html('hi'))
 
 $('svg rect').tipsy({ 
     gravity: 'n',
