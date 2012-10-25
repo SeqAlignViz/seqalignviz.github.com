@@ -71,6 +71,7 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
+    .on("mouseclick", $('svg rect').tipsy("hide"))
 
 $('svg rect').tipsy({ 
     gravity: 'n',
