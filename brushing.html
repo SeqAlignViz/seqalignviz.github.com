@@ -44,6 +44,7 @@ var x = d3.scale.linear().range([0, width]),
 var brush = d3.svg.brush()
     .y(y)
     .x(x)
+    .extent([[0.25, 0.25], [0.75, 0.75]])
     .on("brush", brush);
 
 var svg = d3.select("body").append("svg")
