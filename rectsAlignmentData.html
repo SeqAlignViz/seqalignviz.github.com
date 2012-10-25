@@ -73,8 +73,9 @@ rects.enter().append("rect")
     .attr("fill", function(d, i) { return colormap(d.val); })
 
 $('svg rect').tipsy({ 
-    gravity: 'w', 
-    html: true, 
+    gravity: 'n',
+    fade: true,
+    html: true,
     title: function() {
       var d = this.__data__, letter = d.val;
       return letter; 
