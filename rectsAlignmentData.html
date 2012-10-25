@@ -61,9 +61,9 @@ var rects = svg.selectAll("rect")
     .data(stringArray1D)
 
 rects.enter().append("rect")
-    .attr("x", function(d, i) { return x(d.row); })
+    .attr("x", function(d, i) { return x(d.col); })
     .attr("width", rWidth)
-    .attr("y", function(d, i) { return y(d.col); })
+    .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
 </script>
