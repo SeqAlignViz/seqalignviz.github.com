@@ -10,7 +10,7 @@ var stringData = $.ajax({
                  }).responseText;
 
   //Split values of string data
-var stringArray = stringData.split(",");
+var stringArray = stringData.split("\n");
 alert("Data Loaded: " + stringData);
 
 var p = d3.select("body").selectAll("p")
