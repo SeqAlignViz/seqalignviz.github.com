@@ -75,8 +75,8 @@ rects.enter().append("rect")
     .attr("title", function(d, i) { return d.val; })
 
 rects
-    .on("mousedown", function(){ $('svg rect').tipsy({trigger: 'manual'}); })
-    .on("mouseup", function(){
+    .on("mouseup", function(){ $('svg rect').tipsy({trigger: 'manual'}); })
+    .on("mousedown", function(){
 $('svg rect').tipsy({ 
     gravity: 'n',
     html: true,
