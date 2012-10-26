@@ -12,6 +12,8 @@
   <a rel='tipsy' title='Well hello there'>My tooltip is manually triggered</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("show"); return false;'>Show</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("hide"); return false;'>Hide</a>
+  <a href='#' onclick='$("svg rect").tipsy("show"); return false;'>Show</a>
+  <a href='#' onclick='$("svg rect").tipsy("hide"); return false;'>Hide</a>
 </p>
 </body>
 <script>
@@ -82,8 +84,8 @@ rects.enter().append("rect")
     }
 });*/
 
-$('#manual-example a[rel=tipsy]').tipsy({trigger: 'hover'});
-//$("svg rect").tipsy({trigger: "manual"})
+$('#manual-example a[rel=tipsy]').tipsy({trigger: "hover"});
+$("svg rect").tipsy({trigger: "manual"})
 //rects
 //    .on("mousedown", function() { $("#test").html("hide"); } )
 //    .on("mouseup", function() { $("#test").html("show"); })
