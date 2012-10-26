@@ -12,6 +12,10 @@
   <a rel='tipsy' title='Well hello there'>My tooltip is manually triggered</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("show"); return false;'>Show</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("hide"); return false;'>Hide</a>
+  <a href='#' onclick='$("svg rect").attr("fill","black"); return false;'>Show</a>
+  <a href='#' onclick='$("svg rect").tipsy("hide"); return false;'>Hide</a>
+</p>
+</body>
 <script>
 
 // Get alignment data
@@ -70,6 +74,18 @@ rects.enter().append("rect")
     .attr("fill", function(d, i) { return colormap(d.val); })
     .attr("title", function(d, i) { return d.val; })
 
+rects
+    .on("mousedown", function(){ $('svg rect').tipsy("hide"); })
+    .on("mouseup", function(){
+$('svg rect').tipsy({ 
+    gravity: 'n',
+    html: true,
+    trigger: 'manual',
+    title: function() {
+      var d = this.__data__, letter = d.val;
+      return letter; 
+    }
+});})
 /*$('svg rect').tipsy({ 
     gravity: 'n',
     html: true,
@@ -78,8 +94,8 @@ rects.enter().append("rect")
       var d = this.__data__, letter = d.val;
       return letter; 
     }
-});*/
-
+});
+*/
 $('#manual-example a[rel=tipsy]').tipsy({trigger: "hover"});
 $("svg rect").tipsy({trigger: "hover"})
 //rects
@@ -88,8 +104,4 @@ $("svg rect").tipsy({trigger: "hover"})
 //    .on("mousedown", function() { $("svg rect").tipsy("hide"); return false; } )
 //    .on("mouseup", function() { $("svg rect").tipsy("show"); return false; })
 </script>
-  <a href='#' onclick='$("svg rect").attr("fill","black"); return false;'>Show</a>
-  <a href='#' onclick='$("svg rect").tipsy("hide"); return false;'>Hide</a>
-</p>
-</body>
 </html>
