@@ -72,9 +72,10 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
-    .attr("title", function(d, i) { return d.val; })
-    .on("mousedown", function() { $("svg rect").attr("title", ""); } )
-    .on("mouseup", function(d) { $("svg rect").attr("title", d.val); } )
+//    .attr("title", function(d, i) { return d.val; })
+    .on("mouseover", function(d) { $("svg rect").attr("title", d.val); })
+//    .on("mousedown", function() { $("svg rect").attr("title", ""); } )
+//    .on("mouseup", function(d) { $("svg rect").attr("title", d.val); } )
 
 //rects
 //    .on("mouseover", function() { $("svg rect").tipsy({trigger: "hover"}); })
