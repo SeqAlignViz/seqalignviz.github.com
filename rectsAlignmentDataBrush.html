@@ -66,6 +66,19 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// Create grid
+var rects = svg.selectAll("rect")
+    .data(stringArray1D)
+
+// Create individual rectangles on grid
+rects.enter().append("rect")
+    .attr("x", function(d, i) { return x(d.col); })
+    .attr("width", rWidth)
+    .attr("y", function(d, i) { return y(d.row); })
+    .attr("height", rHeight)
+    .attr("fill", function(d, i) { return colormap(d.val); })
+    .attr("title", function(d, i) { return d.val; })		// Used by tooltip
+
 // Create brush
 var brush = d3.svg.brush()
     .y(y)
@@ -80,20 +93,6 @@ var focus = svg.append("g")
 focus.append("g")
     .attr("class", "brush")
     .call(brush)
-
-// Create grid
-var rects = svg.selectAll("rect")
-    .data(stringArray1D)
-
-// Create individual rectangles on grid
-rects.enter().append("rect")
-    .attr("x", function(d, i) { return x(d.col); })
-    .attr("width", rWidth)
-    .attr("y", function(d, i) { return y(d.row); })
-    .attr("height", rHeight)
-    .attr("fill", function(d, i) { return colormap(d.val); })
-    .attr("title", function(d, i) { return d.val; })		// Used by tooltip
-
 
 //d3.selectAll(".brush").style("pointer-events", "none")
 
