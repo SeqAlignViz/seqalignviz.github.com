@@ -1,0 +1,74 @@
+<html>
+<head>
+<script src="jquery-1.8.2.min.js"></script>
+<script src="d3.v2.min.js"></script>
+<script src="jquery.tipsy.js"></script>
+<link href="tipsy.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id='test'>
+</div>
+</body>
+<script>
+
+// Get alignment data
+var stringArray = $.ajax({
+                    url: "http://seqalignviz.github.com/test.aln",
+                    async: false
+                 }).responseText.split("\n");
+
+// Remove last element, which is an empty string
+stringArray.splice(stringArray.length - 1,1)
+
+// Get dimensions
+var nRow = stringArray.length
+var nCol = stringArray[0].length	// Assuming all rows have equal # of columns
+
+// One-dimensionalize and add attributes indicating position
+var stringArray1D = []
+
+for (i = 0; i < nRow; i++){
+    for(j = 0; j < nCol; j++){
+        stringArray1D.push({val: stringArray[i][j], row: i, col: j})
+    }
+}
+
+// SVG sizing
+var margin = {top: 20, right: 20, bottom: 30, left: 40}
+var width = 960 - margin.left - margin.right
+var height = 500 - margin.top - margin.bottom
+
+// Rectangle sizing
+var rWidth = width/nCol
+var rHeight = height/nRow
+
+// D3 mappings/scalings
+var x = d3.scale.linear().domain([0, nCol]).range([0, width])
+var y = d3.scale.linear().domain([0, nRow]).range([0, height])
+var colormap = d3.scale.ordinal()
+    .domain(["A", "T", "C", "G", "."])
+    // Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
+    .range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
+
+// Create svg
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+
+// Create grid
+var rects = svg.selectAll("rect")
+    .data(stringArray1D)
+
+// Create individual rectangles on grid
+rects.enter().append("rect")
+    .attr("x", function(d, i) { return x(d.col); })
+    .attr("width", rWidth)
+    .attr("y", function(d, i) { return y(d.row); })
+    .attr("height", rHeight)
+    .attr("fill", function(d, i) { return colormap(d.val); })
+    .attr("title", function(d, i) { return d.val; })		// Used by tooltip
+
+// Add tooltips
+$("svg rect").tipsy({delayIn: 500, trigger: "hover"})
+</script>
+</html>
