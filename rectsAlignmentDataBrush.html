@@ -82,7 +82,7 @@ $("svg rect").tipsy({delayIn: 500, trigger: "hover"})
 var brush = d3.svg.brush()
     .y(y)
     .x(x)
-    .extent([[int(nCol/2) - 10, int(nRow/2) - 10], [int(nCol/2) + 10, int(nRow/2) + 10]])
+    .extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
     .on("brush", brush);
 
 // Create brush rectangle (shown on svg)
