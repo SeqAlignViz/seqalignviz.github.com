@@ -74,7 +74,7 @@ rects.enter().append("rect")
     .attr("fill", function(d, i) { return colormap(d.val); })
 //    .attr("title", function(d, i) { return d.val; })
     .on("mouseover", function(d) { $("svg rect").attr("title", d.val); })
-//    .on("mousedown", function() { $("svg rect").attr("title", ""); } )
+    .on("mousedown", function() { $("svg rect").attr("title", ""); } )
 //    .on("mouseup", function(d) { $("svg rect").attr("title", d.val); } )
 
 //rects
