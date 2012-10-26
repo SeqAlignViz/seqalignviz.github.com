@@ -75,7 +75,8 @@ rects.enter().append("rect")
 //    .attr("title", function(d, i) { return d.val; })
 
 rects
-    .on("mouseup", function(){ $("svg rect").tipsy({trigger: "manual"}); $(".tipsy").remove(); })
+    .on("mouseover", function() { $("svg rect").tipsy({trigger: "hover"}); })
+/*    .on("mouseup", function(){ $("svg rect").tipsy({trigger: "manual"}); $(".tipsy").remove(); })
     .on("mousedown", function(){
 $('svg rect').tipsy({ 
     gravity: 'n',
@@ -85,7 +86,7 @@ $('svg rect').tipsy({
       var d = this.__data__, letter = d.val;
       return letter; 
     }
-});})
+});})*/
 /*$('svg rect').tipsy({ 
     gravity: 'n',
     html: true,
