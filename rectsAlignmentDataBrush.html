@@ -93,5 +93,13 @@ focus.append("g")
     .attr("class", "brush")
     .call(brush)
 
+# Handle for 'info' div
+var infoDiv = d3.select("#info")
+
+// Callback for brush events
+function brush() {
+  infoDiv.selectAll("p").data(brush.extent()).text(String)
+}
+
 </script>
 </html>
