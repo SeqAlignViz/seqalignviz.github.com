@@ -72,42 +72,8 @@ rects.enter().append("rect")
     .attr("y", function(d, i) { return y(d.row); })
     .attr("height", rHeight)
     .attr("fill", function(d, i) { return colormap(d.val); })
-    .attr("title", function(d, i) { return d.val; })
-//    .on("mouseover", function(d) { $("svg rect").attr("title", d.val); })
-//    .on("mousedown", function() { $("svg rect").attr("title", ""); } )
-//    .on("mouseup", function(d) { $("svg rect").attr("title", d.val); } )
-
-//rects
-//    .on("mouseover", function() { $("svg rect").tipsy({trigger: "hover"}); })
+    .attr("title", function(d, i) { return d.val; })		// Used by tooltip
 
 $("svg rect").tipsy({delayIn: 500, trigger: "hover"})
-/*    .on("mouseup", function(){ $("svg rect").tipsy({trigger: "manual"}); $(".tipsy").remove(); })
-    .on("mousedown", function(){
-$('svg rect').tipsy({ 
-    gravity: 'n',
-    html: true,
-    trigger: 'hover',
-    title: function() {
-      var d = this.__data__, letter = d.val;
-      return letter; 
-    }
-});})*/
-/*$('svg rect').tipsy({ 
-    gravity: 'n',
-    html: true,
-    trigger: 'manual',
-    title: function() {
-      var d = this.__data__, letter = d.val;
-      return letter; 
-    }
-});
-*/
-$('#manual-example a[rel=tipsy]').tipsy({trigger: "hover"});
-//$("svg rect").tipsy({trigger: "hover"})
-//rects
-//    .on("mousedown", function() { $("#test").html("hide"); } )
-//    .on("mouseup", function() { $("#test").html("show"); })
-//    .on("mousedown", function() { $("svg rect").tipsy("hide"); return false; } )
-//    .on("mouseup", function() { $("svg rect").tipsy("show"); return false; })
 </script>
 </html>
