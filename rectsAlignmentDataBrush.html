@@ -94,6 +94,8 @@ focus.append("g")
     .attr("class", "brush")
     .call(brush)
 
+d3.selectAll(".brush").style("pointer-events", "none")
+
 // Handle for 'info' div
 var infoDiv = d3.select("#info")
 
