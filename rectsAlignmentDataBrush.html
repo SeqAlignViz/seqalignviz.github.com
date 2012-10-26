@@ -63,6 +63,8 @@ var colormap = d3.scale.ordinal()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Create grid
 var rects = svg.selectAll("rect")
