@@ -77,5 +77,13 @@ rects.enter().append("rect")
 
 // Add tooltips
 $("svg rect").tipsy({delayIn: 500, trigger: "hover"})
+
+
+// Create brush
+var brush = d3.svg.brush()
+    .y(y)
+    .x(x)
+    .extent([[0.25, 0.25], [0.75, 0.75]])
+    .on("brush", brush);
 </script>
 </html>
