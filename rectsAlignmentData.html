@@ -90,12 +90,12 @@ rects.enter().append("rect")
     }
 });*/
 
-$("svg rect").tipsy({trigger: "manual"})
 $('#manual-example a[rel=tipsy]').tipsy({trigger: 'manual'});
-rects
+//$("svg rect").tipsy({trigger: "manual"})
+//rects
 //    .on("mousedown", function() { $("#test").html("hide"); } )
 //    .on("mouseup", function() { $("#test").html("show"); })
-    .on("mousedown", function() { $("svg rect").tipsy("hide"); return false; } )
-    .on("mouseup", function() { $("svg rect").tipsy("show"); return false; })
+//    .on("mousedown", function() { $("svg rect").tipsy("hide"); return false; } )
+//    .on("mouseup", function() { $("svg rect").tipsy("show"); return false; })
 </script>
 </html>
