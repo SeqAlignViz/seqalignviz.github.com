@@ -96,6 +96,7 @@ focus.append("g")
 
 d3.selectAll(".brush").style("pointer-events", "visible")
 d3.selectAll(".resize").style("pointer-events", "fill")
+d3.selectAll(".background").style("pointer-events", "none")
 
 // Handle for 'info' div
 var infoDiv = d3.select("#info")
@@ -103,8 +104,6 @@ var infoDiv = d3.select("#info")
 // Callback for brush events
 function brush() {
   infoDiv.selectAll("p").data(brush.extent()).text(String)
-  d3.selectAll(".brush").style("pointer-events", "visible")
-  d3.selectAll(".resize").style("pointer-events", "fill")
 }
 
 // Add tooltips
