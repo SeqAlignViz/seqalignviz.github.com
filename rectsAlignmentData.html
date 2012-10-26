@@ -12,10 +12,6 @@
   <a rel='tipsy' title='Well hello there'>My tooltip is manually triggered</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("show"); return false;'>Show</a>
   <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("hide"); return false;'>Hide</a>
-  <a href='#' onclick='$("svg rect").tipsy("show"); return false;'>Show</a>
-  <a href='#' onclick='$("svg rect").tipsy("hide"); return false;'>Hide</a>
-</p>
-</body>
 <script>
 
 // Get alignment data
@@ -92,4 +88,8 @@ $("svg rect").tipsy({trigger: "hover"})
 //    .on("mousedown", function() { $("svg rect").tipsy("hide"); return false; } )
 //    .on("mouseup", function() { $("svg rect").tipsy("show"); return false; })
 </script>
+  <a href='#' onclick='$("svg rect").tipsy("show"); return false;'>Show</a>
+  <a href='#' onclick='$("svg rect").tipsy("hide"); return false;'>Hide</a>
+</p>
+</body>
 </html>
