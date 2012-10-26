@@ -79,9 +79,6 @@ rects.enter().append("rect")
     .attr("fill", function(d, i) { return colormap(d.val); })
     .attr("title", function(d, i) { return d.val; })		// Used by tooltip
 
-// Add tooltips
-$("svg rect").tipsy({delayIn: 500, trigger: "hover"})
-
 // Create brush
 var brush = d3.svg.brush()
     .y(y)
@@ -104,6 +101,9 @@ var infoDiv = d3.select("#info")
 function brush() {
   infoDiv.selectAll("p").data(brush.extent()).text(String)
 }
+
+// Add tooltips
+$("svg rect").tipsy({delayIn: 500, trigger: "hover"})
 
 </script>
 </html>
