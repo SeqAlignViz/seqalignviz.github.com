@@ -84,5 +84,14 @@ var brush = d3.svg.brush()
     .x(x)
     .extent([[int(nCol/2) - 10, int(nRow/2) - 10], [int(nCol/2) + 10, int(nRow/2) + 10]])
     .on("brush", brush);
+
+// Create brush rectangle (shown on svg)
+var focus = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+focus.append("g")
+    .attr("class", "brush")
+    .call(brush)
+
 </script>
 </html>
