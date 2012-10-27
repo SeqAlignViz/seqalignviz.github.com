@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+		<title>Seq Logo Demo</title>
+		
+		<script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+		<script type="text/javascript" src="lib/seqLogo/base64.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.2r1/build/element/element-min.js"></script> 
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.2r1/build/connection/connection-min.js"></script>
+		<script type="text/javascript" src="lib/seqLogo/canvas2image.js"></script>
+		<script type="text/javascript" src="lib/seqLogo/canvasSeqLogo.js"></script>
+		<script type="text/javascript" src="js/pwm.js"></script>
+	</head>
+	<body>
+		<div id="seqLogo">
+		</div>
+		<div id="aln_zoom">
+		</div>
+	<script type="text/javascript">
+
+	var pwm;
+	d3.text("dat/small.aln", 
+		function (text) { 
+			pwm = createPwm(text);
+			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"), { height: 40 });						
+		});
+	var alnTxt = = $.ajax({
+                    url: "dat/small.aln",
+                    async: false
+                 }).responseText;
+    lines = alnTxt.split("\n");
+	var aln = Array();
+	for (var i = 0; i < lines.length; i++) {
+		aln.push(lines[i].split(""));
+	}
+
+	</script>
+	</body>
+</html>
