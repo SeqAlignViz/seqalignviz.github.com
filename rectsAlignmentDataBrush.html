@@ -84,7 +84,8 @@ var brush = d3.svg.brush()
     .y(y)
     .x(x)
     .extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
-    .on("brush", brush);
+    .on("brush", brush)
+    .on("brushend", brush)
 
 // Create brush rectangle (shown on svg)
 var focus = svg.append("g")
