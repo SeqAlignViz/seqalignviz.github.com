@@ -1,9 +1,9 @@
 <html>
 <head>
-<script src="jquery-1.8.2.min.js"></script>
-<script src="d3.v2.min.js"></script>
-<script src="jquery.tipsy.js"></script>
-<link href="tipsy.css" rel="stylesheet" type="text/css" />
+<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script src="lib/d3/d3.v2.min.js"></script>
+<script src="lib/tipsy/jquery.tipsy.js"></script>
+<link href="lib/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
 <style>
 .brush .extent {
   stroke: #fff;
@@ -22,7 +22,7 @@
 
 // Get alignment data
 var stringArray = $.ajax({
-                    url: "http://seqalignviz.github.com/test.aln",
+                    url: "dat/test.aln",
                     async: false
                  }).responseText.split("\n");
 
