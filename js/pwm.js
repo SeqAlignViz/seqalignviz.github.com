@@ -74,8 +74,6 @@ var Pwm = function(uName) {
 			col = this.columns[i];
 			pspmString = pspmString + col.A + " " + col.C + " " + col.G + " " + col.T + "\n";
 		}
-       	//alert(this.length); 
-		alert(pspmString);
 		var pspm = new Pspm(pspmString);
         var alphabet = new Alphabet('ACGT', 'A 0.25 C 0.25 G 0.25 T 0.25');
         // draw the sequence logo
@@ -124,7 +122,7 @@ var transpose = function(matrix) {
 // maps from PWM name to a Pwm object.
 var createPwm = function(alnTxt) {
 	var pwm = new Pwm("test");
-	lines = alnTxt.replace(/^\s+|\s+$/g,""); // get white space
+	lines = alnTxt.replace(/^\s+|\s+$/g,""); // remove white space
 	lines = lines.split("\n");
 	var aln = Array();
 	for (var i = 0; i < lines.length; i++) {

@@ -12,31 +12,59 @@
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.2r1/build/connection/connection-min.js"></script>
 		<script type="text/javascript" src="lib/seqLogo/canvas2image.js"></script>
 		<script type="text/javascript" src="lib/seqLogo/canvasSeqLogo.js"></script>
+		<script type="text/javascript" src="js/zoom.js"></script>
 		<script type="text/javascript" src="js/pwm.js"></script>
+		<style type="text/css">
+			text {
+				font-size: 8px;
+				text-align: "center";
+				vertical-align: "middle";
+			}
+
+			rect {
+			  fill: red;
+			}
+		</style>
 	</head>
 	<body>
-		<div id="seqLogo">
-		</div>
-		<div id="aln_zoom">
-		</div>
-	<script type="text/javascript">
+		<div id="seqLogo"></div>
+		<div id="aln_zoom" style="width: 960px; height: 500px;"></div>
+		<div id="aln_full" style="width: 960px; height: 500px;"></div>
+		<script type="text/javascript">
+		// SVG sizing
+		var margin = {top: 20, bottom: 0, left: 40, right: 0}
+		var width = 960 - margin.left - margin.right
+		var height = 300 - margin.top - margin.bottom
 
-	var pwm;
-	d3.text("dat/small.aln", 
-		function (text) { 
-			pwm = createPwm(text);
-			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"), { height: 40 });						
-		});
-	var alnTxt = = $.ajax({
-                    url: "dat/small.aln",
-                    async: false
-                 }).responseText;
-    lines = alnTxt.split("\n");
-	var aln = Array();
-	for (var i = 0; i < lines.length; i++) {
-		aln.push(lines[i].split(""));
-	}
+		// draw seqlogo
+		$("#seqLogo")
+			.css("width", width+"px")
+			.css("height", "40px")
+			.css("margin-top", margin.top+"px")
+			.css("margin-left", margin.left+"px")
 
-	</script>
+		var pwm;
+		d3.text("dat/small.aln", 
+			function (text) { 
+				pwm = createPwm(text);
+				pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));						
+			});
+		
+		// draw zoom
+		var alnTxt = $.ajax({
+						url: "dat/small.aln",
+						async: false
+					 }).responseText;
+		lines = alnTxt.replace(/^\s+|\s+$/g,""); // remove white space
+		lines = lines.split("\n");
+		var aln = Array();
+		for (var i = 0; i < lines.length; i++) {
+			aln.push(lines[i].split(""));
+		}
+		drawZoom(aln, d3.select("#aln_zoom"));
+
+		// draw full
+
+		</script>
 	</body>
 </html>
