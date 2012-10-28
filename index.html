@@ -12,8 +12,11 @@
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.2r1/build/connection/connection-min.js"></script>
 		<script type="text/javascript" src="lib/seqLogo/canvas2image.js"></script>
 		<script type="text/javascript" src="lib/seqLogo/canvasSeqLogo.js"></script>
+		<script type="text/javascript" src="js/full.js"></script>
 		<script type="text/javascript" src="js/zoom.js"></script>
 		<script type="text/javascript" src="js/pwm.js"></script>
+		<script src="lib/tipsy/jquery.tipsy.js"></script>
+		<link href="lib/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
 			text {
 				font-size: 8px;
@@ -21,20 +24,17 @@
 				vertical-align: "middle";
 			}
 
-			rect {
-			  fill: red;
-			}
 		</style>
 	</head>
 	<body>
 		<div id="seqLogo"></div>
-		<div id="aln_zoom" style="width: 960px; height: 500px;"></div>
-		<div id="aln_full" style="width: 960px; height: 500px;"></div>
+		<div id="aln_zoom"></div>
+		<div id="aln_full"></div>
 		<script type="text/javascript">
 		// SVG sizing
 		var margin = {top: 20, bottom: 0, left: 40, right: 0}
-		dWidth=960;
-		dHeight=300;
+		dWidth = 960;
+		dHeight = 300;
 		var width = dWidth - margin.left - margin.right
 		var height = dHeight - margin.top - margin.bottom
 
@@ -51,7 +51,11 @@
 				pwm = createPwm(text);
 				pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));						
 			});
-		
+	
+		$("#aln_zoom")
+			.css("width", width+"px")
+			.css("height", height+"px")
+
 		// draw zoom
 		var alnTxt = $.ajax({
 						url: "dat/small.aln",
@@ -65,7 +69,20 @@
 		}
 		drawZoom(aln, d3.select("#aln_zoom"), dWidth, dHeight);
 
+	
+		$("#aln_full")
+			.css("width", width+"px")
+			.css("height", height+"px")
 		// draw full
+		// Get alignment data
+		var stringArray = $.ajax({
+							url: "dat/test.aln",
+							async: false
+						 }).responseText.split("\n");
+		
+		// Remove last element, which is an empty string
+		stringArray.splice(stringArray.length - 1,1)
+		drawFull(stringArray, d3.select("#aln_full"), dWidth, dHeight);
 
 		</script>
 	</body>

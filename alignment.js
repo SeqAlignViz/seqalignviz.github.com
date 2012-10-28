@@ -1,4 +1,4 @@
-var drawZoom = function(aln, divEl, dWidth, dHeight) {
+var drawalignment = function(aln, divEl, dWidth, dHeight, showText) {
 
 	// Get dimensions
 	var nRow = aln.length
@@ -48,9 +48,11 @@ var drawZoom = function(aln, divEl, dWidth, dHeight) {
 		.attr("height", rHeight)
 		.style("fill", function(d, i) { return colormap(d.val); } );
 
-	nodes.append("text")
-		.attr("dy", function(d, i) { return rHeight/1.5; })
-		.attr("dx", function(d, i) { return rWidth/2.0; })
-		.text(function(d, i) { if(d.val != '.') return d.val; })
-		.attr("text-anchor", "middle")
+	if(showText) {
+		nodes.append("text")
+			.attr("dy", function(d, i) { return rHeight/1.5; })
+			.attr("dx", function(d, i) { return rWidth/2.0; })
+			.text(function(d, i) { if(d.val != '.') return d.val; })
+			.attr("text-anchor", "middle")
+	}
 };
