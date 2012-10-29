@@ -34,7 +34,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 			.attr("width", width)
 			.attr("height", height)
-
+	
 	// Create grid
 	var nodes = svg.selectAll("g")
 		.data(alnFlat)
@@ -46,6 +46,9 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 	nodes.append("rect")
 		.attr("width", rWidth)
 		.attr("height", rHeight)
+		.attr("row", function(d, i) { return d.row;} )
+		.attr("col", function(d, i) { return d.col;} )
+		.attr("val", function(d, i) { return d.val;} )
 		.style("fill", function(d, i) { return colormap(d.val); } );
 
 	if(showText) {
@@ -58,38 +61,39 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 	if(createBrush) {
 		// Create brush
 		var brush = d3.svg.brush()
-			.y(y)
-			.x(x)
-			.extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
+			.on("brushstart", brushstart)
 			.on("brush", brush)
+			.on("brushend", brushend)
 
-		// Create brush rectangle (shown on svg)
-		var focus = svg.append("g")
-		//    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		focus.append("g")
-			.attr("class", "brush")
-			.call(brush)
-
-		d3.selectAll(".brush").style("pointer-events", "visible")
-		d3.selectAll(".resize").style("pointer-events", "fill")
-		d3.selectAll(".background").style("pointer-events", "none")
+		var drawBrush = function(p) {
+			d3.select(this).call(brush.x(x[p.x]).y(y[p.y]))
+		};
+		d3.selectAll("svg.g").each(drawBrush);
 
 
 		// Callback for brush events
-		function brush() {
-		  infoDiv.selectAll("p").data(brush.extent()).text(String)
-		  w = brush.extent()[0][0]
-		  n = brush.extent()[0][1]
-		  e = brush.extent()[1][0]
-		  s = brush.extent()[1][1]
-		  if (e - w > 20){
-			brush.extent([[w, n],[w+20, s]])
-			brush.brush()
-		  }
+		function brush(p) {
+			alert("brush");
+		}
+
+		function brushstart(p) {
+			alert("brushstart");
+			if (brush.data !== p) {
+				d3.selectAll("svg.g").call(brush.clear());
+				brush.x(x[p.x]).y(y[p.y]).data = p;
+			}
+		}
+
+		function brushend() {
+			alert("brushend");
+			if(brush.empty()) {
+				for (rect in svg.selectAll("rect")) {
+					alert(rect.toSource());
+				}
+			}
 		}
 
 		// Add tooltips
-		$(divEl).tipsy({delayIn: 500, trigger: "hover"})
+		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
 };
