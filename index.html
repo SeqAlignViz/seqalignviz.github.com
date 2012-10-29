@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="lib/seqLogo/canvasSeqLogo.js"></script>
 		<script type="text/javascript" src="js/full.js"></script>
 		<script type="text/javascript" src="js/zoom.js"></script>
+		<script type="text/javascript" src="js/alignment.js"></script>
 		<script type="text/javascript" src="js/pwm.js"></script>
 		<script src="lib/tipsy/jquery.tipsy.js"></script>
 		<link href="lib/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
@@ -23,7 +24,11 @@
 				text-align: "center";
 				vertical-align: "middle";
 			}
-
+			.brush .extent {
+			  stroke: #fff;
+			  fill-opacity: .25;
+			  shape-rendering: crispEdges;
+			}
 		</style>
 	</head>
 	<body>
@@ -67,7 +72,7 @@
 		for (var i = 0; i < lines.length; i++) {
 			aln.push(lines[i].split(""));
 		}
-		drawZoom(aln, d3.select("#aln_zoom"), dWidth, dHeight);
+		drawAlignment(aln, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
 
 	
 		$("#aln_full")
@@ -82,8 +87,7 @@
 		
 		// Remove last element, which is an empty string
 		stringArray.splice(stringArray.length - 1,1)
-		drawFull(stringArray, d3.select("#aln_full"), dWidth, dHeight);
-
+		drawAlignment(stringArray, d3.select("#aln_full"), dWidth, dHeight, false, true);
 		</script>
 	</body>
 </html>

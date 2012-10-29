@@ -1,4 +1,4 @@
-var drawalignment = function(aln, divEl, dWidth, dHeight, showText) {
+var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush) {
 
 	// Get dimensions
 	var nRow = aln.length
@@ -54,5 +54,42 @@ var drawalignment = function(aln, divEl, dWidth, dHeight, showText) {
 			.attr("dx", function(d, i) { return rWidth/2.0; })
 			.text(function(d, i) { if(d.val != '.') return d.val; })
 			.attr("text-anchor", "middle")
+	}
+	if(createBrush) {
+		// Create brush
+		var brush = d3.svg.brush()
+			.y(y)
+			.x(x)
+			.extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
+			.on("brush", brush)
+
+		// Create brush rectangle (shown on svg)
+		var focus = svg.append("g")
+		//    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		focus.append("g")
+			.attr("class", "brush")
+			.call(brush)
+
+		d3.selectAll(".brush").style("pointer-events", "visible")
+		d3.selectAll(".resize").style("pointer-events", "fill")
+		d3.selectAll(".background").style("pointer-events", "none")
+
+
+		// Callback for brush events
+		function brush() {
+		  infoDiv.selectAll("p").data(brush.extent()).text(String)
+		  w = brush.extent()[0][0]
+		  n = brush.extent()[0][1]
+		  e = brush.extent()[1][0]
+		  s = brush.extent()[1][1]
+		  if (e - w > 20){
+			brush.extent([[w, n],[w+20, s]])
+			brush.brush()
+		  }
+		}
+
+		// Add tooltips
+		$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
 };
