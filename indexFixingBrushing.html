@@ -136,9 +136,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			e = brush.extent()[1][0]
 			s = brush.extent()[1][1]
 			if (e - w > 20){
-				brush.clear()
-		//		brush.brush()
-		//		brush.extent([[w, n],[w+20, s]])
+				brush.extent([[w, n],[w+20, s]])
+				brush.brush(svg)
 			}
 		}
 
