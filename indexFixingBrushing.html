@@ -115,6 +115,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		    .call(brush)
 
 		d3.selectAll(".resize").style("pointer-events", "none")
+		d3.selectAll(".brush").style("pointer-events", "none")
 
 		// Callback for brush events
 		function onbrush(p) {
