@@ -28,7 +28,7 @@
 			}
 			.brush .extent {
 			  stroke: gray;
-			  stroke-width: 3;
+			  stroke-width: 2;
 			  fill-opacity: .1875;
 			  shape-rendering: crispEdges;
 			}
@@ -104,7 +104,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		var brush = d3.svg.brush()
 			.x(x)
 			.y(y)
-   			.extent([[Math.floor(nCol/2) - 10, 0], [Math.floor(nCol/2) + 10, nRow-0.2]])
+   			.extent([[Math.floor(nCol/2) - 10, 0], [Math.floor(nCol/2) + 10, nRow]])
 			.on("brush", onbrush)
 			.on("brushend", brushend)
 
