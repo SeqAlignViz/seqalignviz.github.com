@@ -114,9 +114,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 */
 
 		var focus = svg.append("g")
-		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		focus.append("g")
+		focus
 		    .attr("class", "brush")
 		    .call(brush)
 
