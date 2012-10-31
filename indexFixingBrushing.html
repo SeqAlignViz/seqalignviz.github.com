@@ -118,11 +118,11 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 		// Callback for brush events
 		function onbrush(p) {
-			var s = d3.event.target.extent();
-			w = s[0][0]
-			n = s[0][1]
-			e = s[1][0]
-			s = s[1][1]
+			var ex = d3.event.target.extent();
+			w = ex[0][0]
+			n = ex[0][1]
+			e = ex[1][0]
+			s = ex[1][1]
 			d3.target.extent([[0, n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
 			alert('onbrush')
