@@ -117,8 +117,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			
 			lineNW.attr("x1", function() { return x(w); })
 			lineSW.attr("x1", function() { return x(w); })
-			lineNW.attr("x1", function() { return x(e); })
-			lineSW.attr("x1", function() { return x(e); })
+			lineNE.attr("x1", function() { return x(e); })
+			lineSE.attr("x1", function() { return x(e); })
 		}
 
 		function brushend() {
