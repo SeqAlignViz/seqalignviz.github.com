@@ -32,6 +32,10 @@
 			  fill-opacity: .1875;
 			  shape-rendering: crispEdges;
 			}
+			.zoomline {
+			  stroke: gray;
+			  stroke-width: 2;
+			}
 		</style>
 	</head>
 	<body>
@@ -139,11 +143,18 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		var focus = svg.append("g")
 
 		focus
-		    .attr("class", "brush")
-		    .call(brush)
+			.attr("class", "brush")
+			.call(brush)
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
+
+		var L1 = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return y(0); })
 
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
