@@ -59,39 +59,50 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.attr("text-anchor", "middle")
 	}
 	if(createBrush) {
-		// Create brush
-		var brush = d3.svg.brush()
-			.on("brushstart", brushstart)
-			.on("brush", brush)
-			.on("brushend", brushend)
-
-		var drawBrush = function(p) {
-			d3.select(this).call(brush.x(x[p.x]).y(y[p.y]))
-		};
-		d3.selectAll("svg.g").each(drawBrush);
-
-
 		// Callback for brush events
-		function brush(p) {
-			alert("brush");
-		}
-
-		function brushstart(p) {
-			alert("brushstart");
-			if (brush.data !== p) {
-				d3.selectAll("svg.g").call(brush.clear());
-				brush.x(x[p.x]).y(y[p.y]).data = p;
-			}
+		function onbrush(p) {
+			var ex = d3.event.target.extent();
+			w = ex[0][0]
+			n = ex[0][1]
+			e = ex[1][0]
+			s = ex[1][1]
+			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
+			d3.event.target(d3.select(this))
 		}
 
 		function brushend() {
-			alert("brushend");
 			if(brush.empty()) {
 				for (rect in svg.selectAll("rect")) {
 					alert(rect.toSource());
 				}
 			}
+			w = brush.extent()[0][0]
+			n = brush.extent()[0][1]
+			e = brush.extent()[1][0]
+			s = brush.extent()[1][1]
+			if (e - w > 20){
+				brush.extent([[w, n],[w+20, s]])
+				brush.brush()
+			}
+			console.log(n + " " + w)
 		}
+
+		// Create brush
+		var brush = d3.svg.brush()
+			.x(x)
+			.y(y)
+   			.extent([[Math.floor(nCol/2) - 10, 0], [Math.floor(nCol/2) + 10, nRow]])
+			.on("brush", onbrush)
+			.on("brushend", brushend)
+
+		var focus = svg.append("g")
+
+		focus
+		    .attr("class", "brush")
+		    .call(brush)
+
+		d3.selectAll(".resize").style("pointer-events", "none")
+		d3.selectAll(".background").style("pointer-events", "none")
 
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
