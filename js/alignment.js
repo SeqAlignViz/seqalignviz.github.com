@@ -80,11 +80,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			n = brush.extent()[0][1]
 			e = brush.extent()[1][0]
 			s = brush.extent()[1][1]
-			if (e - w > 20){
-				brush.extent([[w, n],[w+20, s]])
-				brush.brush()
-			}
-			console.log(n + " " + w)
+			console.log(w + " " + e)
 		}
 
 		// Create brush
