@@ -125,6 +125,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			s = s[1][1]
 			d3.target.extent([[0, n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
+			alert('onbrush')
 		}
 
 		function brushend() {
