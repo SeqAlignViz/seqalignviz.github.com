@@ -107,12 +107,6 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.on("brush", brush)
 			.on("brushend", brushend)
 
-/*		var drawBrush = function(p) {
-			d3.select(this).call(brush.x(x[p.x]).y(y[p.y]))
-		};
-		d3.selectAll("svg.g").each(drawBrush);
-*/
-
 		var focus = svg.append("g")
 
 		focus
@@ -121,11 +115,9 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 		// Callback for brush events
 		function brush(p) {
-		//	alert("brush");
 		}
 
 		function brushstart(p) {
-		//	alert("brushstart");
 			if (brush.data !== p) {
 				d3.selectAll("svg.g").call(brush.clear());
 				brush.x(x[p.x]).y(y[p.y]).data = p;
@@ -133,7 +125,6 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		}
 
 		function brushend() {
-		//	alert("brushend");
 			if(brush.empty()) {
 				for (rect in svg.selectAll("rect")) {
 					alert(rect.toSource());
