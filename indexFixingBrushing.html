@@ -105,6 +105,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.y(y)
    			.extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
 			.on("brush", onbrush)
+			.on("brushend", brushend)
 
 		var focus = svg.append("g")
 
@@ -117,13 +118,6 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 		// Callback for brush events
 		function onbrush(p) {
-		}
-
-		function brushstart(p) {
-			if (brush.data !== p) {
-				d3.selectAll("svg.g").call(brush.clear());
-				brush.x(x[p.x]).y(y[p.y]).data = p;
-			}
 		}
 
 		function brushend() {
@@ -140,6 +134,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 				brush.extent([[w, n],[w+20, s]])
 				brush.brush()
 			}
+			throw(n + " " + w)
 		}
 
 		// Add tooltips
