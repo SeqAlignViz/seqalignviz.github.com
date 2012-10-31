@@ -101,6 +101,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 	if(createBrush) {
 		// Create brush
 		var brush = d3.svg.brush()
+			.x(x)
+			.y(y)
 			.on("brushstart", brushstart)
 			.on("brush", brush)
 			.on("brushend", brushend)
