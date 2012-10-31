@@ -117,6 +117,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			
 			lineNW.attr("x1", function() { return x(w); })
 			lineSW.attr("x1", function() { return x(w); })
+			lineNW.attr("x1", function() { return x(e); })
+			lineSW.attr("x1", function() { return x(e); })
 		}
 
 		function brushend() {
@@ -163,6 +165,18 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
 			.attr("y1", function() { return y(nRow); })
 			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return y(0); })
+		var lineNE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return y(0); })
+		var lineSE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(nRow); })
+			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return y(0); })
 
 		// Add tooltips
