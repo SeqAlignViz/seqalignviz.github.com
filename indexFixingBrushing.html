@@ -115,7 +115,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
 			
-			d3.selectAll("zoomline").attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+//			d3.selectAll("zoomline")
+			L1.attr("x1", function() { return x(w); })
 		}
 
 		function brushend() {
