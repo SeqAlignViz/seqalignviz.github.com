@@ -115,8 +115,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
 			
-//			d3.selectAll("zoomline")
-			L1.attr("x1", function() { return x(w); })
+			lineNW.attr("x1", function() { return x(w); })
+			lineSW.attr("x1", function() { return x(w); })
 		}
 
 		function brushend() {
@@ -152,10 +152,16 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
 
-		var L1 = svg.append("line")
+		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
 			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return y(0); })
+		var lineSW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(nRows); })
 			.attr("x2", function() { return x(0); })
 			.attr("y2", function() { return y(0); })
 
