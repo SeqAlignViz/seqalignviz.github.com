@@ -114,6 +114,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		    .attr("class", "brush")
 		    .call(brush)
 
+		d3.selectAll(".resize").style("pointer-events", "none")
+
 		// Callback for brush events
 		function onbrush(p) {
 		}
@@ -139,7 +141,6 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 				brush.extent([[w, n],[w+20, s]])
 				brush.brush()
 			}
-			alert('brushend')
 		}
 
 		// Add tooltips
