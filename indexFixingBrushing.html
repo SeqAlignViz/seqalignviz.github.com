@@ -105,7 +105,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.y(y)
    			.extent([[Math.floor(nCol/2) - 10, Math.floor(nRow/2) - 10], [Math.floor(nCol/2) + 10, Math.floor(nRow/2) + 10]])
 			.on("brushstart", brushstart)
-			.on("brush", brush)
+			.on("brush", onbrush)
 			.on("brushend", brushend)
 
 		var focus = svg.append("g")
@@ -115,7 +115,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		    .call(brush)
 
 		// Callback for brush events
-		function brush(p) {
+		function onbrush(p) {
 		}
 
 		function brushstart(p) {
