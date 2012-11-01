@@ -6,7 +6,8 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 	var colormap = d3.scale.ordinal()
 		.domain(["A", "T", "C", "G", "."])
 		// Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
-		.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
+		//.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
+		.range(["rgb(0,127,0)", "rgb(204,0,0)", "rgb(0,0,204)", "rgb(255,179,0)", "white"])
 
 	var width = dWidth - margin.left - margin.right
 	var height = dHeight - margin.top - margin.bottom
@@ -76,12 +77,14 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			});
 			var numRows = s-n;
 			var numCols = e-w;
-			console.log([w, e, n,s]);
+			//console.log([w, e, n,s]);
 			//console.log(numRows + " " + numCols);
 			//console.log([numRows, numCols]);
 			//alert([minRow, minCol, maxRow, maxCol]);
 			d3.select("#aln_zoom svg").remove();
 			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
+			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 
 			//alert([w, n, e, s]);
 		}
@@ -93,9 +96,10 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			n = brush.extent()[0][1]
 			e = brush.extent()[1][0]
 			s = brush.extent()[1][1]
-			console.log(w + " " + e)
-			pwm = generatePwm(d3.select("#aln_zoom").selectAll("rect"), e-w);
-			console.log(pwm);
+			//console.log(w + " " + e)
+			//pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
+			//pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
+			//console.log(pwm);
 		}
 
 		// Create brush

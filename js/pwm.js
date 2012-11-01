@@ -130,25 +130,28 @@ var generatePwm = function(alnArray, numCols) {
 		numA[i] = numC[i] = numG[i] = numT[i] = numN[i] = 0;
 	}
 	
-		console.log(alnArray);	
-	for (var i = 0; i < alnArray.length; i++) {
-		switch (alnArray[i].val) {
+	console.log(numCols);
+	alnArray.each(function() {
+		node = d3.select(this);
+		value = node.attr("val");
+		col = parseInt(node.attr("col"));
+		switch (value) {
 			case 'A': case 'a':
-				numA[alnArray.col] += 1;
+				numA[col] += 1;
 				break;
 			case 'C': case 'c':
-				numC[alnArray.col] += 1;
+				numC[col] += 1;
 				break;
 			case 'G': case 'g':
-				numG[alnArray.col] += 1;
+				numG[col] += 1;
 				break;
 			case 'T': case 't':
-				numT[alnArray.col] += 1;
+				numT[col] += 1;
 				break;
 			default:
-				numN[alnArray.col] += 1;
+				numN[col] += 1;
 		}
-	}
+	});
 	for (var i = 0; i < numCols; i++) {
 		/* Since we don't know what Ns are just add them to all colums*/
 		var total = numA[i] + numC[i] + numG[i] + numT[i] + numN[i];
