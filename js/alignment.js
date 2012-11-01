@@ -59,8 +59,10 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			n = Math.round(ex[0][1]) // y start
 			e = Math.round(ex[1][0]) // x end
 			s = Math.round(ex[1][1]) // y end
-			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
+			d3.event.target.extent([[w, n],[e, s]])
 			d3.event.target(d3.select(this))
+			lineNW.attr("x1", function() { return x(w); })
+			lineNE.attr("x1", function() { return x(e); })
 			//alert(divEl.selectAll("rect"));
 			//alert([w, n, e, s]);
 			//console.log(w + " " + e)
@@ -118,6 +120,31 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
+
+		var lineNW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(0); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top; })
+		var lineNE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(nCol); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top; })
 
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
