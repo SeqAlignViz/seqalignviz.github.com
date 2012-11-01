@@ -54,19 +54,34 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		// Callback for brush events
 		function onbrush(p) {
 			var ex = d3.event.target.extent();
-			w = ex[0][0]
-			n = ex[0][1]
-			e = ex[1][0]
-			s = ex[1][1]
+			w = Math.round(ex[0][0]) // x start
+			n = Math.round(ex[0][1]) // y start
+			e = Math.round(ex[1][0]) // x end
+			s = Math.round(ex[1][1]) // y end
 			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
 			//alert(divEl.selectAll("rect"));
+			//alert([w, n, e, s]);
+			//console.log(w + " " + e)
 			var zoomRects = [];
+			//divEl.selectAll("rect").attr("class", "red");
 			divEl.selectAll("rect").each(function() {
-				for(var i in d3.select(this)) {
-					//alert(i);
+				node = d3.select(this);
+				nodeRow = node.attr('row') - w;
+				nodeCol = node.attr('col') - n;
+				if(w <= nodeRow && nodeRow <= e && n <= nodeCol && nodeCol <= s) {
+					zoomRects.push({val: node.attr("val"), row: nodeRow, col: nodeCol });
 				}
 			});
+			var numRows = s-n;
+			var numCols = e-w;
+			//console.log([n,e,s,w]);
+			//console.log(numRows + " " + numCols);
+			//console.log([numRows, numCols]);
+			//alert([minRow, minCol, maxRow, maxCol]);
+			d3.select("#aln_zoom svg").exit();
+			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+
 			//alert([w, n, e, s]);
 		}
 
