@@ -52,21 +52,8 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("text-anchor", "middle")
 	}
 	if(createBrush) {
-		// Callback for brush events
-		function onbrush(p) {
-			var ex = d3.event.target.extent();
-			w = Math.round(ex[0][0]) // x start
-			n = Math.round(ex[0][1]) // y start
-			e = Math.round(ex[1][0]) // x end
-			s = Math.round(ex[1][1]) // y end
-			d3.event.target.extent([[w, n],[e, s]])
-			d3.event.target(d3.select(this))
-			lineNW.attr("x1", function() { return x(w); })
-			lineNE.attr("x1", function() { return x(e); })
 
-			//alert(divEl.selectAll("rect"));
-			//alert([w, n, e, s]);
-			//console.log(w + " " + e)
+		function updateZoom(n, s, e, w){
 			var zoomRects = [];
 			//divEl.selectAll("rect").attr("class", "red");
 			divEl.selectAll("rect").each(function() {
@@ -86,6 +73,24 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			//alert([minRow, minCol, maxRow, maxCol]);
 			d3.select("#aln_zoom svg").remove();
 			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+		}
+		// Callback for brush events
+		function onbrush(p) {
+			var ex = d3.event.target.extent();
+			w = Math.round(ex[0][0]) // x start
+			n = Math.round(ex[0][1]) // y start
+			e = Math.round(ex[1][0]) // x end
+			s = Math.round(ex[1][1]) // y end
+			d3.event.target.extent([[w, n],[e, s]])
+			d3.event.target(d3.select(this))
+			lineNW.attr("x1", function() { return x(w); })
+			lineNE.attr("x1", function() { return x(e); })
+
+			//alert(divEl.selectAll("rect"));
+			//alert([w, n, e, s]);
+			//console.log(w + " " + e)
+			updateZoom(n, s, e ,w)
+
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 
