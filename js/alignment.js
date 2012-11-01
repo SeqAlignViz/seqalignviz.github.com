@@ -25,7 +25,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-			.attr("width", width)
+			.attr("width", width-1)
 			.attr("height", height)
 	
 	// Create grid
