@@ -27,10 +27,14 @@
 			  shape-rendering: crispEdges;
 			}
 			.brush .extent {
-			  stroke: gray;
+			  stroke: #000;
 			  stroke-width: 2;
 			  fill-opacity: .1875;
 			  shape-rendering: crispEdges;
+			}
+			.zoomline {
+			  stroke: #000;
+			  stroke-width: 2;
 			}
 		</style>
 	</head>
@@ -69,12 +73,12 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 	// Create svg
 	var svg = divEl.append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
+		.attr("width", width + margin.left + margin.right + "px")
+		.attr("height", height + margin.top + margin.bottom + "px")
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-			.attr("width", width)
-			.attr("height", height)
+//			.attr("width", width)
+//			.attr("height", height)
 	
 	// Create grid
 	var nodes = svg.selectAll("g")
@@ -104,12 +108,17 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		// Callback for brush events
 		function onbrush(p) {
 			var ex = d3.event.target.extent();
-			w = ex[0][0]
+			w = Math.round(ex[0][0])
 			n = ex[0][1]
-			e = ex[1][0]
+			e = Math.round(ex[1][0])
 			s = ex[1][1]
-			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
+			d3.event.target.extent([[w, n],[e, s]])
 			d3.event.target(d3.select(this))
+			
+			lineNW.attr("x1", function() { return x(w); })
+	//		lineSW.attr("x1", function() { return x(w); })
+			lineNE.attr("x1", function() { return x(e); })
+	//		lineSE.attr("x1", function() { return x(e); })
 		}
 
 		function brushend() {
@@ -139,18 +148,55 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 		var focus = svg.append("g")
 
 		focus
-		    .attr("class", "brush")
-		    .call(brush)
+			.attr("class", "brush")
+			.call(brush)
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
 
+		var lineNW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(0); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top; })
+/*		var lineSW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(nRow); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return y(0); })
+*/		var lineNE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(nCol); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top; })
+/*		var lineSE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(nRow); })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return y(0); })
+*/
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
 };
 		// SVG sizing
-		var margin = {top: 20, bottom: 0, left: 40, right: 0}
+		var margin = {top: 40, bottom: 1, left: 40, right: 1}
 		dWidth = 960;
 		dHeight = 300;
 		var width = dWidth - margin.left - margin.right
@@ -171,8 +217,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			});
 	
 		$("#aln_zoom")
-			.css("width", width+"px")
-			.css("height", height+"px")
+			.css("width", dWidth+"px")
+			.css("height", dHeight+"px")
 
 		// draw zoom
 		var alnTxt = $.ajax({
@@ -189,8 +235,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 	
 		$("#aln_full")
-			.css("width", width+"px")
-			.css("height", height+"px")
+			.css("width", dWidth+"px")
+			.css("height", dHeight+"px")
 		// draw full
 		// Get alignment data
 		var stringArray = $.ajax({
