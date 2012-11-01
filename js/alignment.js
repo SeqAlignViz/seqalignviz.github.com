@@ -15,11 +15,15 @@ var colorbase = function(d) {
 	if(colorByNucleotide) {
 		return nucleotidemap(d.val);
 	} else {
-		if(d.val == '.') {
-			return "white";
-		} else {
-		return percentidmap(d.percentid);
+		var color = "white";
+		switch(d.val) {
+			case 'A': case 'C': case 'G': case 'T':
+				color = percentidmap(d.percentid);
+				break
+			default:
+				color = "white"
 		}
+		return color;
 	}
 };
 
@@ -201,15 +205,12 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
-		// Add tooltips
-		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
 };
 
 var computePercentId = function(stringArray) {
 	var idMatrix = [];
-	return idMatrix;
-	for(var j = 0; j < stringArray[0].length; i++) {
+	for(var j = 0; j < stringArray[0].length; j++) {
 		idMatrix[j] = [];
 		idMatrix[j]['A'] = idMatrix[j]['C'] = idMatrix[j]['G'] = idMatrix[j]['T'] = idMatrix[j]['N'] = 0;
 		for(var i = 0; i < stringArray.length; i++) {
@@ -232,6 +233,11 @@ var computePercentId = function(stringArray) {
 			}
 
 		}
+		total = idMatrix[j]['A'] + idMatrix[j]['C'] + idMatrix[j]['G'] + idMatrix[j]['T'] + idMatrix[j]['N'];
+		idMatrix[j]['A'] = (idMatrix[j]['A'] + 0.25*idMatrix[j]['N'])/total;
+		idMatrix[j]['C'] = (idMatrix[j]['C'] + 0.25*idMatrix[j]['N'])/total;
+		idMatrix[j]['G'] = (idMatrix[j]['G'] + 0.25*idMatrix[j]['N'])/total;
+		idMatrix[j]['T'] = (idMatrix[j]['T'] + 0.25*idMatrix[j]['N'])/total;
 	}
 	return idMatrix;
 };

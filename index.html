@@ -114,7 +114,7 @@
 		var percentIdMatrix = computePercentId(stringArray);
 		for(var i = 0; i < stringArray.length; i++) {
 			for(var j = 0; j < stringArray[i].length; j++) {
-				var percentid = 1;//percentIdMatrix[j][stringArray[i][j]];
+				var percentid = percentIdMatrix[j][stringArray[i][j]];
 				alnArray.push({val: stringArray[i][j], percentid : percentid, row: i, col: j});
 			}
 		}
