@@ -14,7 +14,7 @@
 		<script type="text/javascript" src="lib/seqLogo/canvasSeqLogo.js"></script>
 		<script type="text/javascript" src="js/alignment.js"></script>
 		<script type="text/javascript" src="js/pwm.js"></script>
-		<script src="lib/tipsy/jquery.tipsy.js"></script>
+		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
 		<link href="lib/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
 		<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
@@ -54,8 +54,24 @@
 				<div class="span3">
 					<h2>Welcome!</h2>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui sit amet felis. Integer sit amet diam. Phasellus ultrices viverra velit. Nam mattis, arcu ut bibendum commodo, magna nisi tincidunt tortor, quis accumsan augue ipsum id lorem.</p>
-					<a href="#" class="btn">Color by Nucleotide</a>
-					<a href="#" class="btn">Color by % ID</a>
+					<div class="accordion" id="legend">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a id="nucleotide" class="btn btn-primary accordion-toggle" onClick="colorScheme('#nucleotide');" data-toggle="collapse" data-parent="#legend" href="#nucleotide-legend">Colored by Nucleotide</a>
+							</div>
+							<div id="nucleotide-legend" class="accordion-body collapse in">
+								<div class="accordion-inner">Nuke</div>
+							</div>
+						</div>
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a id="percentid" class="btn accordion-toggle" onClick="colorScheme('#percentid');" data-toggle="collapse" data-parent="#legend" href="#percentid-legend">Color by % Identity</a>
+							</div>
+							<div id="percentid-legend" class="accordion-body collapse">
+								<div class="accordion-inner">id</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			<div class="span9">
 				<div id="seqLogo"></div>
@@ -95,9 +111,11 @@
 						 }).responseText;
 		var alnArray = [];
 		var stringArray = stringData.replace(/^\s+|\s+$/g,"").split("\n");
+		var percentIdMatrix = computePercentId(stringArray);
 		for(var i = 0; i < stringArray.length; i++) {
 			for(var j = 0; j < stringArray[i].length; j++) {
-				alnArray.push({val: stringArray[i][j], row: i, col: j});
+				var percentid = 1;//percentIdMatrix[j][stringArray[i][j]];
+				alnArray.push({val: stringArray[i][j], percentid : percentid, row: i, col: j});
 			}
 		}
 		var rows = stringArray.length;

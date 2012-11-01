@@ -1,13 +1,57 @@
+var colorByNucleotide = true;
+
+var nucleotidemap = d3.scale.ordinal()
+	.domain(["A", "T", "C", "G", "."])
+	// Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
+	//.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
+	.range(["rgb(0,127,0)", "rgb(204,0,0)", "rgb(0,0,204)", "rgb(255,179,0)", "white"])
+
+var percentidmap = d3.scale.quantile()
+	.domain([0.5, 0.75, 1])
+	//.range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"])
+	.range(["#9e9ac8", "#756bb1", "#54278f"])
+
+var colorbase = function(d) {
+	if(colorByNucleotide) {
+		return nucleotidemap(d.val);
+	} else {
+		if(d.val == '.') {
+			return "white";
+		} else {
+		return percentidmap(d.percentid);
+		}
+	}
+};
+
+var colorScheme = function(id) {
+	if(id == "#nucleotide") {
+		colorByNucleotide = true;
+		$("#nucleotide")
+			.addClass("btn-primary");
+		$("#percentid")
+			.removeClass("btn-primary");
+		 d3.select("#aln_full svg").remove();
+		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
+		 $("#nucleotide").text("Colored by Nucleotide");
+		 $("#percentid").text("Color by % Identity");
+	} else {
+		colorByNucleotide = false;
+		$("#percentid")
+			.addClass("btn-primary");
+		$("#nucleotide")
+			.removeClass("btn-primary");
+		 d3.select("#aln_full svg").remove();
+		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
+		 $("#percentid").text("Colored by % Identity");
+		 $("#nucleotide").text("Color by Nucleotide");
+	}
+};
+
 var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush) {
 
 	// Get dimensions
 	var nRow = rows;
 	var nCol = cols;	// Assuming all rows have equal # of columns
-	var colormap = d3.scale.ordinal()
-		.domain(["A", "T", "C", "G", "."])
-		// Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
-		//.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
-		.range(["rgb(0,127,0)", "rgb(204,0,0)", "rgb(0,0,204)", "rgb(255,179,0)", "white"])
 
 	var width = dWidth - margin.left - margin.right
 	var height = dHeight - margin.top - margin.bottom
@@ -42,7 +86,8 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.attr("row", function(d, i) { return d.row;} )
 		.attr("col", function(d, i) { return d.col;} )
 		.attr("val", function(d, i) { return d.val;} )
-		.style("fill", function(d, i) { return colormap(d.val); } );
+		.attr("percentid", function(d, i) { return d.percentid;} )
+		.style("fill", function(d, i) { return colorbase(d); } );
 
 	if(showText) {
 		nodes.append("text")
@@ -61,7 +106,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 				nodeRow = parseInt(node.attr('row'));
 				nodeCol = parseInt(node.attr('col'));
 				if(n <= nodeRow && nodeRow <= s && w <= nodeCol && nodeCol <= e) {
-					zoomRects.push({val: node.attr("val"), row: nodeRow - n, col: nodeCol - w });
+					zoomRects.push({val: node.attr("val"), percentid : node.attr("percentid"), row: nodeRow - n, col: nodeCol - w });
 					//console.log([nodeRow, nodeRow-n, nodeCol, nodeCol-w])
 				}
 			});
@@ -159,4 +204,34 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
+};
+
+var computePercentId = function(stringArray) {
+	var idMatrix = [];
+	return idMatrix;
+	for(var j = 0; j < stringArray[0].length; i++) {
+		idMatrix[j] = [];
+		idMatrix[j]['A'] = idMatrix[j]['C'] = idMatrix[j]['G'] = idMatrix[j]['T'] = idMatrix[j]['N'] = 0;
+		for(var i = 0; i < stringArray.length; i++) {
+			value = stringArray[i][j];
+			switch (value) {
+				case 'A': case 'a':
+					idMatrix[j]['A'] += 1;
+					break;
+				case 'C': case 'c':
+					idMatrix[j]['C'] += 1;
+					break;
+				case 'G': case 'g':
+					idMatrix[j]['G'] += 1;
+					break;
+				case 'T': case 't':
+					idMatrix[j]['T'] += 1;
+					break;
+				default:
+					idMatrix[j]['N'] += 1;
+			}
+
+		}
+	}
+	return idMatrix;
 };
