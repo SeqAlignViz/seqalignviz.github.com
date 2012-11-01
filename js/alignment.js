@@ -25,7 +25,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-			.attr("width", width)
+			.attr("width", width-1)
 			.attr("height", height)
 	
 	// Create grid
@@ -52,18 +52,8 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("text-anchor", "middle")
 	}
 	if(createBrush) {
-		// Callback for brush events
-		function onbrush(p) {
-			var ex = d3.event.target.extent();
-			w = Math.round(ex[0][0]) // x start
-			n = Math.round(ex[0][1]) // y start
-			e = Math.round(ex[1][0]) // x end
-			s = Math.round(ex[1][1]) // y end
-			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
-			d3.event.target(d3.select(this))
-			//alert(divEl.selectAll("rect"));
-			//alert([w, n, e, s]);
-			//console.log(w + " " + e)
+
+		function updateZoom(n, s, e, w){
 			var zoomRects = [];
 			//divEl.selectAll("rect").attr("class", "red");
 			divEl.selectAll("rect").each(function() {
@@ -83,6 +73,25 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			//alert([minRow, minCol, maxRow, maxCol]);
 			d3.select("#aln_zoom svg").remove();
 			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+		}
+		// Callback for brush events
+		function onbrush(p) {
+			var ex = d3.event.target.extent();
+			w = Math.round(ex[0][0]) // x start
+			n = Math.round(ex[0][1]) // y start
+			e = Math.round(ex[1][0]) // x end
+			s = Math.round(ex[1][1]) // y end
+			if(e - w != 20 ) { e = w + 20; }
+			d3.event.target.extent([[w, n],[e, s]])
+			d3.event.target(d3.select(this))
+			lineNW.attr("x1", function() { return x(w); })
+			lineNE.attr("x1", function() { return x(e); })
+
+			//alert(divEl.selectAll("rect"));
+			//alert([w, n, e, s]);
+			//console.log(w + " " + e)
+			updateZoom(n, s, e ,w)
+
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 
@@ -119,6 +128,34 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
 
+		var lineNW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineW = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(0); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(0); })
+			.attr("y2", function() { return -margin.top; })
+		var lineNE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("y1", function() { return y(0); })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top/2; })
+		var lineE = svg.append("line")
+			.attr("class", "zoomline")
+			.attr("x1", function() { return x(nCol); })
+			.attr("y1", function() { return -margin.top/2; })
+			.attr("x2", function() { return x(nCol); })
+			.attr("y2", function() { return -margin.top; })
+
+			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
+			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
+			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
