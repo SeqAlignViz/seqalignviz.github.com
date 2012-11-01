@@ -63,6 +63,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			d3.event.target(d3.select(this))
 			lineNW.attr("x1", function() { return x(w); })
 			lineNE.attr("x1", function() { return x(e); })
+
 			//alert(divEl.selectAll("rect"));
 			//alert([w, n, e, s]);
 			//console.log(w + " " + e)
@@ -120,8 +121,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
-
-		onbrush()
 
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
