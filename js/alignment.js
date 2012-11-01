@@ -154,7 +154,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("y2", function() { return -margin.top; })
 
 			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
-			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
+			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
