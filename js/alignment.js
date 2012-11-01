@@ -164,7 +164,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		var brush = d3.svg.brush()
 			.x(x)
 			.y(y)
-   			.extent([[Math.floor(nCol/2) - 10, -0.35], [Math.floor(nCol/2) + 10, nRow]])
+   			.extent([[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]])
 			.on("brush", onbrush)
 			.on("brushend", brushend)
 
