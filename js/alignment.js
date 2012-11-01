@@ -67,19 +67,20 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			//divEl.selectAll("rect").attr("class", "red");
 			divEl.selectAll("rect").each(function() {
 				node = d3.select(this);
-				nodeRow = node.attr('row') - w;
-				nodeCol = node.attr('col') - n;
-				if(w <= nodeRow && nodeRow <= e && n <= nodeCol && nodeCol <= s) {
-					zoomRects.push({val: node.attr("val"), row: nodeRow, col: nodeCol });
+				nodeRow = parseInt(node.attr('row'));
+				nodeCol = parseInt(node.attr('col'));
+				if(n <= nodeRow && nodeRow <= s && w <= nodeCol && nodeCol <= e) {
+					zoomRects.push({val: node.attr("val"), row: nodeRow - n, col: nodeCol - w });
+					//console.log([nodeRow, nodeRow-n, nodeCol, nodeCol-w])
 				}
 			});
 			var numRows = s-n;
 			var numCols = e-w;
-			//console.log([n,e,s,w]);
+			console.log([w, e, n,s]);
 			//console.log(numRows + " " + numCols);
 			//console.log([numRows, numCols]);
 			//alert([minRow, minCol, maxRow, maxCol]);
-			d3.select("#aln_zoom svg").exit();
+			d3.select("#aln_zoom svg").remove();
 			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
 
 			//alert([w, n, e, s]);
@@ -87,15 +88,14 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		function brushend() {
 			if(brush.empty()) {
-				for (rect in svg.selectAll("rect")) {
-					alert(rect.toSource());
-				}
 			}
 			w = brush.extent()[0][0]
 			n = brush.extent()[0][1]
 			e = brush.extent()[1][0]
 			s = brush.extent()[1][1]
 			console.log(w + " " + e)
+			pwm = generatePwm(d3.select("#aln_zoom").selectAll("rect"), e-w);
+			console.log(pwm);
 		}
 
 		// Create brush

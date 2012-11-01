@@ -118,6 +118,50 @@ var transpose = function(matrix) {
 	return t;
 };
 
+// Load a PWM for array
+var generatePwm = function(alnArray, numCols) {
+	var pwm = new Pwm("test");
+	var numA = [];
+	var numC = [];
+	var numG = [];
+	var numT = [];
+	var numN = [];	
+	for (var i = 0; i < numCols; i++) {
+		numA[i] = numC[i] = numG[i] = numT[i] = numN[i] = 0;
+	}
+	
+		console.log(alnArray);	
+	for (var i = 0; i < alnArray.length; i++) {
+		switch (alnArray[i].val) {
+			case 'A': case 'a':
+				numA[alnArray.col] += 1;
+				break;
+			case 'C': case 'c':
+				numC[alnArray.col] += 1;
+				break;
+			case 'G': case 'g':
+				numG[alnArray.col] += 1;
+				break;
+			case 'T': case 't':
+				numT[alnArray.col] += 1;
+				break;
+			default:
+				numN[alnArray.col] += 1;
+		}
+	}
+	for (var i = 0; i < numCols; i++) {
+		/* Since we don't know what Ns are just add them to all colums*/
+		var total = numA[i] + numC[i] + numG[i] + numT[i] + numN[i];
+		var freqA = (numA[i] + 0.25*numN[i])/total;
+		var freqC = (numC[i] + 0.25*numN[i])/total;
+		var freqG = (numG[i] + 0.25*numN[i])/total;
+		var freqT = (numT[i] + 0.25*numN[i])/total;
+		//console.log([numA[i], numC[i], numG[i], numT[i], numN[i], total]);
+		pwm.pushColumn(freqA, freqC, freqG, freqT);
+	}
+	return pwm;
+}
+
 // Load a PWM library into an associative array that
 // maps from PWM name to a Pwm object.
 var createPwm = function(alnTxt) {
