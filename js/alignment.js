@@ -134,7 +134,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 			//alert(divEl.selectAll("rect"));
 			//alert([w, n, e, s]);
-			//console.log(w + " " + e)
+			console.log(w + " " + e + " " + n + " " + s)
 			updateZoom(n, s, e ,w)
 
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
