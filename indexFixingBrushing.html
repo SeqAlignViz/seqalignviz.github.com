@@ -117,7 +117,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			
 			lineNW.attr("x1", function() { return x(w); })
 	//		lineSW.attr("x1", function() { return x(w); })
-			lineNE.attr("x1", function() { return x(e); })
+			lineNE.attr("x1", function() { return Math.min(x(e), x(nCol)-1); })
 	//		lineSE.attr("x1", function() { return x(e); })
 		}
 
