@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="js/pwm.js"></script>
 		<script src="lib/tipsy/jquery.tipsy.js"></script>
 		<link href="lib/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
+		<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
 			text {
 				font-size: 8px;
@@ -37,22 +38,41 @@
 			  stroke: #000;
 			  stroke-width: 2;
 			}
-			.red {
-			}
 		</style>
 	</head>
 	<body>
-		<div id="explain" style="width: 100px; height: 100%; left: 0; margin-top: 40 px; position: absolute; ">
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui sit amet felis. Integer sit amet diam. Phasellus ultrices viverra velit. Nam mattis, arcu ut bibendum commodo, magna nisi tincidunt tortor, quis accumsan augue ipsum id lorem.
+		<div class="container">
+			<div class="row">
+				<div class="span4">
+					<img src="img/Zoom-In-icon.png" style="height: 50px"/>
+				</div>
+				<div class="span8 pagination-right">
+					<h1>Zoomer!</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+				<hr/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span3">
+					<h2>Welcome!</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui sit amet felis. Integer sit amet diam. Phasellus ultrices viverra velit. Nam mattis, arcu ut bibendum commodo, magna nisi tincidunt tortor, quis accumsan augue ipsum id lorem.</p>
+					<a href="#" class="btn">Color by Nucleotide</a>
+					<a href="#" class="btn">Color by % ID</a>
+				</div>
+			<div class="span9">
+				<div id="seqLogo"></div>
+				<div id="aln_zoom"></div>
+				<div id="aln_full"></div>
+			</div>
 		</div>
-		<div id="seqLogo"></div>
-		<div id="aln_zoom"></div>
-		<div id="aln_full"></div>
 		<script type="text/javascript">
 		// SVG sizing
-		var margin = {top: 40, bottom: 1, left: 40, right: 1}
-		dWidth = 870;
-		dHeight = 300;
+		var margin = {top: 10, bottom: 10, left: 0, right: 0}
+		dWidth = 700;
+		dHeight = 250;
 		var width = dWidth - margin.left - margin.right
 		var height = dHeight - margin.top - margin.bottom
 
@@ -61,43 +81,18 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui si
 			.css("width", width+"px")
 			.css("height", "40px")
 			.css("margin-top", margin.top+"px")
-			.css("margin-left", margin.left+100+"px")
-			.css("left", "100px")
+			.css("margin-left", margin.left+"px")
 
-		var pwm;
-		d3.text("dat/small.aln", 
-			function (text) { 
-				pwm = createPwm(text);
-				pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));						
-			});
 	
 		$("#aln_zoom")
 			.css("width", dWidth+"px")
 			.css("height", dHeight+"px")
-			.css("margin-left", "100px")
-
-		// draw zoom
-		var alnTxt = $.ajax({
-						url: "dat/small.aln",
-						async: false
-					 }).responseText;
-		lines = alnTxt.replace(/^\s+|\s+$/g,""); // remove white space
-		lines = lines.split("\n");
-		var aln = Array();
-		for (var i = 0; i < lines.length; i++) {
-			for (var j = 0; j < lines[i].length; j++) {
-				aln.push({val: lines[i][j], row: i, col: j});
-			}
-		}
-		var rows = lines.length;
-		var cols = lines[0].length;
-		//drawAlignment(aln, rows, cols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
 
 	
 		$("#aln_full")
 			.css("width", dWidth+"px")
 			.css("height", dHeight+"px")
-			.css("margin-left", "100px")
+		
 		// draw full
 		// Get alignment data
 		var stringData = $.ajax({
