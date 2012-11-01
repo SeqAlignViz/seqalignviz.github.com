@@ -123,9 +123,9 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		function onbrush(p) {
 			var ex = d3.event.target.extent();
 			w = Math.round(ex[0][0]) // x start
-			n = ex[0][1] // y start
+			n = Math.round(ex[0][1]) // y start
 			e = Math.round(ex[1][0]) // x end
-			s = ex[1][1] // y end
+			s = Math.round(ex[1][1]) // y end
 			if(e - w != 20 ) { e = w + 20; }
 			d3.event.target.extent([[w, n],[e, s]])
 			d3.event.target(d3.select(this))
@@ -160,7 +160,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		var brush = d3.svg.brush()
 			.x(x)
 			.y(y)
-   			.extent([[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]])
+   			.extent([[Math.floor(nCol/2) - 10, 0], [Math.floor(nCol/2) + 10, nRow]])
 			.on("brush", onbrush)
 			.on("brushend", brushend)
 
@@ -176,7 +176,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
-			.attr("y1", function() { return y(-0.25); })
+			.attr("y1", function() { return y(0); })
 			.attr("x2", function() { return x(0); })
 			.attr("y2", function() { return -margin.top/2; })
 		var lineW = svg.append("line")
@@ -188,7 +188,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		var lineNE = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
-			.attr("y1", function() { return y(-0.25); })
+			.attr("y1", function() { return y(0); })
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top/2; })
 		var lineE = svg.append("line")
