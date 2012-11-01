@@ -1,21 +1,13 @@
-var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush) {
+var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush) {
 
 	// Get dimensions
-	var nRow = aln.length
-	var nCol = aln[0].length	// Assuming all rows have equal # of columns
+	var nRow = rows;
+	var nCol = cols;	// Assuming all rows have equal # of columns
 	var colormap = d3.scale.ordinal()
 		.domain(["A", "T", "C", "G", "."])
 		// Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
 		.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
 
-	// One-dimensionalize and add attributes indicating position
-	var alnFlat = []
-	for (i = 0; i < nRow; i++){
-		for(j = 0; j < nCol; j++){
-			alnFlat.push({val: aln[i][j], row: i, col: j})
-		}
-	}
-	
 	var width = dWidth - margin.left - margin.right
 	var height = dHeight - margin.top - margin.bottom
 
@@ -37,7 +29,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 	
 	// Create grid
 	var nodes = svg.selectAll("g")
-		.data(alnFlat)
+		.data(aln)
 
 	// Create individual rectangles on grid
 	nodes.enter().append("g")
@@ -68,6 +60,14 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			s = ex[1][1]
 			d3.event.target.extent([[Math.round(w), n],[Math.round(e), s]])
 			d3.event.target(d3.select(this))
+			//alert(divEl.selectAll("rect"));
+			var zoomRects = [];
+			divEl.selectAll("rect").each(function() {
+				for(var i in d3.select(this)) {
+					//alert(i);
+				}
+			});
+			//alert([w, n, e, s]);
 		}
 
 		function brushend() {

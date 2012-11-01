@@ -78,9 +78,13 @@
 		lines = lines.split("\n");
 		var aln = Array();
 		for (var i = 0; i < lines.length; i++) {
-			aln.push(lines[i].split(""));
+			for (var j = 0; j < lines[i].length; j++) {
+				aln.push({val: lines[i][j], row: i, col: j});
+			}
 		}
-		drawAlignment(aln, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+		var rows = lines.length;
+		var cols = lines[0].length;
+		drawAlignment(aln, rows, cols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
 
 	
 		$("#aln_full")
@@ -88,14 +92,20 @@
 			.css("height", height+"px")
 		// draw full
 		// Get alignment data
-		var stringArray = $.ajax({
+		var stringData = $.ajax({
 							url: "dat/test.aln",
 							async: false
-						 }).responseText.split("\n");
-		
-		// Remove last element, which is an empty string
-		stringArray.splice(stringArray.length - 1,1)
-		drawAlignment(stringArray, d3.select("#aln_full"), dWidth, dHeight, false, true);
+						 }).responseText;
+		var alnArray = [];
+		var stringArray = stringData.replace(/^\s+|\s+$/g,"").split("\n");
+		for(var i = 0; i < stringArray.length; i++) {
+			for(var j = 0; j < stringArray[i].length; j++) {
+				alnArray.push({val: stringArray[i][j], row: i, col: j});
+			}
+		}
+		var rows = stringArray.length;
+		var cols = stringArray[0].length;
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
 		</script>
 	</body>
 </html>
