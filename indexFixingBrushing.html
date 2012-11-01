@@ -159,11 +159,11 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
 			.attr("y1", function() { return y(0); })
 			.attr("x2", function() { return x(0); })
-			.attr("y2", function() { return -margin.top/4; })
+			.attr("y2", function() { return -margin.top/2; })
 		var lineW = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(0); })
-			.attr("y1", function() { return -margin.top/4; })
+			.attr("y1", function() { return -margin.top/2; })
 			.attr("x2", function() { return x(0); })
 			.attr("y2", function() { return -margin.top; })
 /*		var lineSW = svg.append("line")
@@ -177,11 +177,11 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
 			.attr("y1", function() { return y(0); })
 			.attr("x2", function() { return x(nCol); })
-			.attr("y2", function() { return -margin.top/4; })
+			.attr("y2", function() { return -margin.top/2; })
 		var lineE = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(nCol)-1; })
-			.attr("y1", function() { return -margin.top/4; })
+			.attr("y1", function() { return -margin.top/2; })
 			.attr("x2", function() { return x(nCol)-1; })
 			.attr("y2", function() { return -margin.top; })
 /*		var lineSE = svg.append("line")
@@ -196,7 +196,7 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 	}
 };
 		// SVG sizing
-		var margin = {top: 20, bottom: 0, left: 40, right: 0}
+		var margin = {top: 40, bottom: 0, left: 40, right: 0}
 		dWidth = 960;
 		dHeight = 300;
 		var width = dWidth - margin.left - margin.right
