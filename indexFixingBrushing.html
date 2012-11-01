@@ -73,8 +73,8 @@ var drawAlignment = function(aln, divEl, dWidth, dHeight, showText, createBrush)
 
 	// Create svg
 	var svg = divEl.append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
+		.attr("width", width + margin.left + margin.right + "px")
+		.attr("height", height + margin.top + margin.bottom + "px")
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 //			.attr("width", width)
