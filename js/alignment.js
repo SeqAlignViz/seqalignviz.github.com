@@ -152,6 +152,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top; })
 
+			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
 		// Add tooltips
 		//$(divEl).tipsy({delayIn: 500, trigger: "hover"})
 	}
