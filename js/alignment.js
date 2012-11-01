@@ -121,6 +121,8 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
 
+		onbrush()
+
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
