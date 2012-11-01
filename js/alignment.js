@@ -123,12 +123,11 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		function onbrush(p) {
 			var ex = d3.event.target.extent();
 			w = Math.round(ex[0][0]) // x start
-			n = ex[0][1] // y start
+			n = Math.round(ex[0][1]) // y start
 			e = Math.round(ex[1][0]) // x end
-			s = ex[1][1] // y end
+			s = Math.round(ex[1][1]) // y end
 			if(e - w != 20 ) { e = w + 20; }
-			n = -0.25
-			d3.event.target.extent([[w, n],[e, s]])
+			d3.event.target.extent([[w, -0.25],[e, s]])
 			d3.event.target(d3.select(this))
 			lineNW.attr("x1", function() { return x(w); })
 			lineNE.attr("x1", function() { return x(e); })
