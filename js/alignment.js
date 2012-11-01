@@ -72,7 +72,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			//console.log([numRows, numCols]);
 			//alert([minRow, minCol, maxRow, maxCol]);
 			d3.select("#aln_zoom svg").remove();
-			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth-1, dHeight, true, false);
 		}
 		// Callback for brush events
 		function onbrush(p) {
