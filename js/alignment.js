@@ -36,10 +36,10 @@ var colorScheme = function(id) {
 			.removeClass("btn-primary");
 		
 		brush = d3.selectAll("#aln_full svg .extent")
-		x = brush.attr("x")
-		y = brush.attr("y")
-		width = brush.attr("width")
-		height = brush.attr("height")
+		x = parseInt(brush.attr("x"))
+		y = parseInt(brush.attr("y"))
+		width = parseInt(brush.attr("width"))
+		height = parseInt(brush.attr("height"))
 		brushExt = [[x, y], [x + width, y + height]]
 		d3.select("#aln_full svg").remove();
 		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true, brushExt);
