@@ -107,7 +107,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.style("fill", function(d, i) { return colorbase(d); } );
 
 	if(showText) {
-		//nodes.append("text")
 		nodes.append("text")
 			.attr("dy", function(d, i) { return rHeight/1.5; })
 			.attr("dx", function(d, i) { return rWidth/2.0; })
@@ -147,7 +146,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 				.attr("d", d3line2(pathinfo))
 				.attr("id", "zoomPath")
 				.style("fill", "black")
-				.style("opacity", 0.25);
 		}
 		// Callback for brush events
 		function onbrush(p) {
@@ -159,8 +157,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			if(e - w != 20 ) { e = w + 20; }
 			d3.event.target.extent([[w, -0.25],[e, s]])
 			d3.event.target(d3.select(this))
-			//lineNW.attr("x1", function() { return x(w); })
-			//lineNE.attr("x1", function() { return x(e); })
 
 			console.log(w + " " + e + " " + n + " " + s)
 			updateZoom(n, s, e ,w)
@@ -201,35 +197,10 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
-		/*
-		var lineNW = svg.append("line")
-			.attr("class", "zoomline")
-			.attr("x1", function() { return x(myExt[0][0]); })
-			.attr("y1", function() { return y(-0.15); })
-			.attr("x2", function() { return x(0); })
-			.attr("y2", function() { return -margin.top/2; })
-		var lineW = svg.append("line")
-			.attr("class", "zoomline")
-			.attr("x1", function() { return x(0); })
-			.attr("y1", function() { return -margin.top/2; })
-			.attr("x2", function() { return x(0); })
-			.attr("y2", function() { return -margin.top; })
-		var lineNE = svg.append("line")
-			.attr("class", "zoomline")
-			.attr("x1", function() { return x(myExt[1][0]); })
-			.attr("y1", function() { return y(-0.15); })
-			.attr("x2", function() { return x(nCol); })
-			.attr("y2", function() { return -margin.top/2; })
-		var lineE = svg.append("line")
-			.attr("class", "zoomline")
-			.attr("x1", function() { return x(nCol); })
-			.attr("y1", function() { return -margin.top/2; })
-			.attr("x2", function() { return x(nCol); })
-			.attr("y2", function() { return -margin.top; })
-		*/
-			updateZoom(0, nRow, myExt[1][0], myExt[0][0])
-			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
-			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
+		
+		updateZoom(0, nRow, myExt[1][0], myExt[0][0])
+		pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
+		pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 	}
 };
 
