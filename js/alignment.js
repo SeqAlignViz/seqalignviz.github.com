@@ -51,8 +51,14 @@ var colorScheme = function(id) {
 			.addClass("btn-primary");
 		$("#nucleotide")
 			.removeClass("btn-primary");
+		brush = d3.selectAll("#aln_full svg .extent")
+		x = parseInt(brush.attr("x"))
+		y = parseInt(brush.attr("y"))
+		width = parseInt(brush.attr("width"))
+		height = parseInt(brush.attr("height"))
+		brushExt = [[x, y], [x + width, y + height]]
 		d3.select("#aln_full svg").remove();
-		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true, brushExt);
 		$("#percentid").text("Colored by % Identity");
 		$("#nucleotide").text("Color by Nucleotide");
 	}
