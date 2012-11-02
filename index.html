@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 	  <meta charset="utf-8" />
 		<title>Seq Logo Demo</title>
@@ -19,9 +19,12 @@
 		<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
 			text {
+				font-family: monospace;
 				font-size: 8px;
-				text-align: "center";
-				vertical-align: "middle";
+				fill: #fff;
+				text-rendering: optimizeLegibility;
+				alignment-baseline: middle;
+				dominant-baseline: middle;
 			}
 			.brush .extent {
 			  stroke: #000;
@@ -32,6 +35,7 @@
 			.zoomline {
 			  stroke: #000;
 			  stroke-width: 2;
+			  shape-rendering: geometricPrecision;
 			}
 		</style>
 	</head>

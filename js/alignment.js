@@ -94,6 +94,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.style("fill", function(d, i) { return colorbase(d); } );
 
 	if(showText) {
+		//nodes.append("text")
 		nodes.append("text")
 			.attr("dy", function(d, i) { return rHeight/1.5; })
 			.attr("dx", function(d, i) { return rWidth/2.0; })
@@ -104,24 +105,36 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		function updateZoom(n, s, e, w){
 			var zoomRects = [];
-			//divEl.selectAll("rect").attr("class", "red");
 			divEl.selectAll("rect").each(function() {
 				node = d3.select(this);
 				nodeRow = parseInt(node.attr('row'));
 				nodeCol = parseInt(node.attr('col'));
 				if(n <= nodeRow && nodeRow <= s && w <= nodeCol && nodeCol <= e) {
 					zoomRects.push({val: node.attr("val"), percentid : node.attr("percentid"), row: nodeRow - n, col: nodeCol - w });
-					//console.log([nodeRow, nodeRow-n, nodeCol, nodeCol-w])
 				}
 			});
 			var numRows = s-n;
 			var numCols = e-w;
-			//console.log([w, e, n,s]);
-			//console.log(numRows + " " + numCols);
-			//console.log([numRows, numCols]);
-			//alert([minRow, minCol, maxRow, maxCol]);
 			d3.select("#aln_zoom svg").remove();
 			drawAlignment(zoomRects, numRows, numCols, d3.select("#aln_zoom"), dWidth, dHeight, true, false);
+			drawTrapz(w,e);
+		}
+		function drawTrapz(brushX1, brushX2) {
+			d3.select("#aln_full svg #zoomPath").remove();
+			var pathinfo = [ { x : x(0), y :  -margin.top-margin.bottom },
+						     { x : x(brushX1), y : y(0) },
+							 { x : x(brushX2), y : y(0) },
+							 { x : x(nCol), y : -margin.top-margin.bottom } ];
+			console.log(y(-2)+" yay");
+			var d3line2 = d3.svg.line()
+							.x(function(d) { return d.x; })
+							.y(function(d) { return d.y; })
+							.interpolate("linear");
+			svg.append("svg:path")
+				.attr("d", d3line2(pathinfo))
+				.attr("id", "zoomPath")
+				.style("fill", "black")
+				.style("opacity", 0.25);
 		}
 		// Callback for brush events
 		function onbrush(p) {
@@ -133,18 +146,14 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			if(e - w != 20 ) { e = w + 20; }
 			d3.event.target.extent([[w, -0.25],[e, s]])
 			d3.event.target(d3.select(this))
-			lineNW.attr("x1", function() { return x(w); })
-			lineNE.attr("x1", function() { return x(e); })
+			//lineNW.attr("x1", function() { return x(w); })
+			//lineNE.attr("x1", function() { return x(e); })
 
-			//alert(divEl.selectAll("rect"));
-			//alert([w, n, e, s]);
 			console.log(w + " " + e + " " + n + " " + s)
 			updateZoom(n, s, e ,w)
 
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
-
-			//alert([w, n, e, s]);
 		}
 
 		function brushend() {
@@ -154,10 +163,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			n = brush.extent()[0][1]
 			e = brush.extent()[1][0]
 			s = brush.extent()[1][1]
-			//console.log(w + " " + e)
-			//pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
-			//pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
-			//console.log(pwm);
 		}
 
 		// Create brush
@@ -176,7 +181,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		d3.selectAll(".resize").style("pointer-events", "none")
 		d3.selectAll(".background").style("pointer-events", "none")
-
+		/*
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
 			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
@@ -201,7 +206,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("y1", function() { return -margin.top/2; })
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top; })
-
+		*/
 			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
