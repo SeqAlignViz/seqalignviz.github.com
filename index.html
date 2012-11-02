@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	  <meta charset="utf-8" />
-		<title>Seq Logo Demo</title>
+		<title>D3NAExplorer Demo</title>
 		
 		<script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
@@ -51,7 +51,16 @@
 								<a id="nucleotide" class="btn btn-primary accordion-toggle" onClick="colorScheme('#nucleotide');" data-toggle="collapse" data-parent="#legend" href="#nucleotide-legend">Colored by Nucleotide</a>
 							</div>
 							<div id="nucleotide-legend" class="accordion-body collapse in">
-								<div class="accordion-inner">Nuke</div>
+								<div class="accordion-inner" style="text-align:center">
+								<table style="margin-left: auto; margin-right: auto; color:white;">
+									<tr>
+									<td style="background-color:rgb(0,127,0); width:23px">A</td>
+									<td style="background-color:rgb(0,0,204); width:23px">C</td>
+									<td style="background-color:rgb(255,179,0); width:23px">G</td>
+									<td style="background-color:rgb(204,0,0); width:23px">T</td>
+									</tr>
+								</table>
+								</div>
 							</div>
 						</div>
 						<div class="accordion-group">
@@ -59,7 +68,14 @@
 								<a id="percentid" class="btn accordion-toggle" onClick="colorScheme('#percentid');" data-toggle="collapse" data-parent="#legend" href="#percentid-legend">Color by % Identity</a>
 							</div>
 							<div id="percentid-legend" class="accordion-body collapse">
-								<div class="accordion-inner">id</div>
+								<div class="accordion-inner" style="text-align:center">
+								<table style="margin-left: auto; margin-right: auto; color:white">
+									<tr><td style="background-color:#9e9ac8;">&nbsp;0% < %Id <= &nbsp;&nbsp;50% </td></tr>
+									<tr><td style="background-color:#756bb1;">50% < %Id <= &nbsp;75% </td></tr>
+									<tr><td style="background-color:#54278f;">75% < %Id <= 100% </td></tr>
+								</table>
+
+								</div>
 							</div>
 						</div>
 					</div>

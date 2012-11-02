@@ -1,11 +1,14 @@
 var colorByNucleotide = true;
 
+//var nucleoData= [["A", "rgb(0,127,0)"], ["T", "rgb(204,0,0)"], ["C", "rgb(0,0,204)"], ["G", "rgb(255,179,0)"], ["-", "white"]];
 var nucleotidemap = d3.scale.ordinal()
 	.domain(["A", "T", "C", "G", "."])
 	// Colors chosen using color brewer: 4 data classes, qualitative, colorblind safe
 	//.range(["#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "white"])
 	.range(["rgb(0,127,0)", "rgb(204,0,0)", "rgb(0,0,204)", "rgb(255,179,0)", "white"])
+			
 
+//var percentData= [[0, 0.5, "#9e9ac8"], [0.5, 0.75, "#756bb1"], [0.75, 1, "#54278f"]];
 var percentidmap = d3.scale.quantile()
 	.domain([0.5, 0.75, 1])
 	//.range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"])
@@ -146,6 +149,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 				.attr("d", d3line2(pathinfo))
 				.attr("id", "zoomPath")
 				.style("fill", "black")
+				.style("opacity", "0.25")
 		}
 		// Callback for brush events
 		function onbrush(p) {
