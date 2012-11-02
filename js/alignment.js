@@ -34,24 +34,31 @@ var colorScheme = function(id) {
 			.addClass("btn-primary");
 		$("#percentid")
 			.removeClass("btn-primary");
-		 d3.select("#aln_full svg").remove();
-		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
-		 $("#nucleotide").text("Colored by Nucleotide");
-		 $("#percentid").text("Color by % Identity");
+		
+		brush = d3.selectAll("#aln_full svg .extent")
+		x = brush.attr("x")
+		y = brush.attr("y")
+		width = brush.attr("width")
+		height = brush.attr("height")
+		brushExt = [[x, y], [x + width, y + height]]
+		d3.select("#aln_full svg").remove();
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true, brushExt);
+		$("#nucleotide").text("Colored by Nucleotide");
+		$("#percentid").text("Color by % Identity");
 	} else {
 		colorByNucleotide = false;
 		$("#percentid")
 			.addClass("btn-primary");
 		$("#nucleotide")
 			.removeClass("btn-primary");
-		 d3.select("#aln_full svg").remove();
-		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
-		 $("#percentid").text("Colored by % Identity");
-		 $("#nucleotide").text("Color by Nucleotide");
+		d3.select("#aln_full svg").remove();
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
+		$("#percentid").text("Colored by % Identity");
+		$("#nucleotide").text("Color by Nucleotide");
 	}
 };
 
-var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush) {
+var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush, brushExt) {
 
 	// Get dimensions
 	var nRow = rows;
@@ -161,10 +168,11 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		}
 
 		// Create brush
+		myExt = brushExt || [[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]]
 		var brush = d3.svg.brush()
 			.x(x)
 			.y(y)
-   			.extent([[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]])
+   			.extent(myExt)
 			.on("brush", onbrush)
 			.on("brushend", brushend)
 
