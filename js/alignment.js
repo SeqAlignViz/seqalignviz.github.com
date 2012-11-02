@@ -114,7 +114,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		.attr("val", function(d, i) { return d.val;} )
 		.attr("percentid", function(d, i) { return d.percentid;} )
 		.style("fill", function(d, i) { return colorbase(d); } )
-		.style("stroke-opacity", function(d,i) { if (colorbase(d) == "white"){ return 0.0;} return 1.0; })
+		.style("fill-opacity", function(d,i) { if (colorbase(d) == "white"){ return 0.0;} return 1.0; })
 
 	if(showText) {
 		nodes.append("text")
