@@ -84,39 +84,6 @@ var Pwm = function(uName) {
     };
 
 };
-var transpose = function(matrix) {
-
-	// Calculate the width and height of the Array
-	var a = matrix,
-	    w = a.length ? a.length : 0,
-		h = a[0] instanceof Array ? a[0].length : 0;
-
-	// In case it is a zero matrix, no transpose routine is needed.
-	if(h === 0 || w === 0) { return []; }
-
-	/**
-	 * @var {Number} i Counter
-	 * @var {Number} j Counter
-	 * @var {Array} t Is the array where transposed data is stored.
-	 */
-	var i, j, t = [];
-
-	// Loop through every item in the outer array (height)
-	for(i=0; i<h; i++) {
-
-		// Insert a new row (array)
-		t[i] = [];
-
-		// Loop through every item per item in outer array (width)
-		for(j=0; j<w; j++) {
-
-			// Save transposed data.
-			t[i][j] = a[j][i];
-		}
-	}
-
-	return t;
-};
 
 // Load a PWM for array
 var generatePwm = function(alnArray, numCols) {
@@ -130,7 +97,6 @@ var generatePwm = function(alnArray, numCols) {
 		numA[i] = numC[i] = numG[i] = numT[i] = numN[i] = 0;
 	}
 	
-	console.log(numCols);
 	alnArray.each(function() {
 		node = d3.select(this);
 		value = node.attr("val");
@@ -159,55 +125,8 @@ var generatePwm = function(alnArray, numCols) {
 		var freqC = (numC[i] + 0.25*numN[i])/total;
 		var freqG = (numG[i] + 0.25*numN[i])/total;
 		var freqT = (numT[i] + 0.25*numN[i])/total;
-		//console.log([numA[i], numC[i], numG[i], numT[i], numN[i], total]);
-		pwm.pushColumn(freqA, freqC, freqG, freqT);
-	}
-	return pwm;
-}
-
-// Load a PWM library into an associative array that
-// maps from PWM name to a Pwm object.
-var createPwm = function(alnTxt) {
-	var pwm = new Pwm("test");
-	lines = alnTxt.replace(/^\s+|\s+$/g,""); // remove white space
-	lines = lines.split("\n");
-	var aln = Array();
-	for (var i = 0; i < lines.length; i++) {
-		aln.push(lines[i].split(""));
-	}
-	alnByCol = transpose(aln);
-	for (var i = 0; i < alnByCol.length; i++) {
-		var col = alnByCol[i];
-		var numA = 0;
-		var numC = 0;
-		var numG = 0;
-		var numT = 0;
-		var numN = 0;
-		for (var j = 0; j < col.length; j++) {
-			switch (col[j]) {
-				case 'A': case 'a':
-					numA += 1;
-					break;
-				case 'C': case 'c':
-					numC += 1;
-					break;
-				case 'G': case 'g':
-					numG += 1;
-					break;
-				case 'T': case 't':
-					numT += 1;
-					break;
-				default:
-					numN += 1;
-			}
-		}
-		/* Since we don't know what Ns are just add them to all colums*/
-		var total = numA + numC + numG + numT + numN;
-		var freqA = (numA + 0.25*numN)/total;
-		var freqC = (numC + 0.25*numN)/total;
-		var freqG = (numG + 0.25*numN)/total;
-		var freqT = (numT + 0.25*numN)/total;
 		pwm.pushColumn(freqA, freqC, freqG, freqT);
 	}
 	return pwm;
 };
+

@@ -32,6 +32,9 @@ var colorbase = function(d) {
 
 var colorScheme = function(id) {
 	if(id == "#nucleotide") {
+		if(colorByNucleotide) {
+			return;
+		}
 		colorByNucleotide = true;
 		$("#nucleotide")
 			.addClass("btn-primary");
@@ -49,6 +52,9 @@ var colorScheme = function(id) {
 		$("#nucleotide").text("Colored by Nucleotide");
 		$("#percentid").text("Color by % Identity");
 	} else {
+		if(!colorByNucleotide) {
+			return;
+		}
 		colorByNucleotide = false;
 		$("#percentid")
 			.addClass("btn-primary");
@@ -140,7 +146,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 						     { x : x(brushX1), y : y(0) },
 							 { x : x(brushX2), y : y(0) },
 							 { x : x(nCol), y : -margin.top-margin.bottom } ];
-			console.log(y(-2)+" yay");
 			var d3line2 = d3.svg.line()
 							.x(function(d) { return d.x; })
 							.y(function(d) { return d.y; })
@@ -162,7 +167,6 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			d3.event.target.extent([[w, -0.25],[e, s]])
 			d3.event.target(d3.select(this))
 
-			console.log(w + " " + e + " " + n + " " + s)
 			updateZoom(n, s, e ,w)
 
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), e-w);
