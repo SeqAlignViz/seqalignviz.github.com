@@ -34,24 +34,37 @@ var colorScheme = function(id) {
 			.addClass("btn-primary");
 		$("#percentid")
 			.removeClass("btn-primary");
-		 d3.select("#aln_full svg").remove();
-		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
-		 $("#nucleotide").text("Colored by Nucleotide");
-		 $("#percentid").text("Color by % Identity");
+		
+		brush = d3.selectAll("#aln_full svg .extent")
+		x = parseInt(brush.attr("x"))
+		y = parseInt(brush.attr("y"))
+		width = parseInt(brush.attr("width"))
+		height = parseInt(brush.attr("height"))
+		brushExt = [[x, y], [x + width, y + height]]
+		d3.select("#aln_full svg").remove();
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true, brushExt);
+		$("#nucleotide").text("Colored by Nucleotide");
+		$("#percentid").text("Color by % Identity");
 	} else {
 		colorByNucleotide = false;
 		$("#percentid")
 			.addClass("btn-primary");
 		$("#nucleotide")
 			.removeClass("btn-primary");
-		 d3.select("#aln_full svg").remove();
-		 drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true);
-		 $("#percentid").text("Colored by % Identity");
-		 $("#nucleotide").text("Color by Nucleotide");
+		brush = d3.selectAll("#aln_full svg .extent")
+		x = parseInt(brush.attr("x"))
+		y = parseInt(brush.attr("y"))
+		width = parseInt(brush.attr("width"))
+		height = parseInt(brush.attr("height"))
+		brushExt = [[x, y], [x + width, y + height]]
+		d3.select("#aln_full svg").remove();
+		drawAlignment(alnArray, rows, cols, d3.select("#aln_full"), dWidth, dHeight, false, true, brushExt);
+		$("#percentid").text("Colored by % Identity");
+		$("#nucleotide").text("Color by Nucleotide");
 	}
 };
 
-var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush) {
+var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, createBrush, brushExt) {
 
 	// Get dimensions
 	var nRow = rows;
@@ -166,10 +179,17 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		}
 
 		// Create brush
+		if(typeof(brushExt) != 'undefined'){
+			brushExt[0][0] = Math.round(x.invert(brushExt[0][0]))
+			brushExt[0][1] = -0.25
+			brushExt[1][0] = Math.round(x.invert(brushExt[1][0]))
+			brushExt[1][1] = nRow
+		}
+		myExt = brushExt || [[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]]
 		var brush = d3.svg.brush()
 			.x(x)
 			.y(y)
-   			.extent([[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]])
+   			.extent(myExt)
 			.on("brush", onbrush)
 			.on("brushend", brushend)
 
@@ -184,7 +204,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 		/*
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
-			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("x1", function() { return x(myExt[0][0]); })
 			.attr("y1", function() { return y(-0.15); })
 			.attr("x2", function() { return x(0); })
 			.attr("y2", function() { return -margin.top/2; })
@@ -196,7 +216,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("y2", function() { return -margin.top; })
 		var lineNE = svg.append("line")
 			.attr("class", "zoomline")
-			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("x1", function() { return x(myExt[1][0]); })
 			.attr("y1", function() { return y(-0.15); })
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top/2; })
@@ -207,7 +227,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top; })
 		*/
-			updateZoom(0, nRow, Math.floor(nCol/2) + 10, Math.floor(nCol/2) - 10)
+			updateZoom(0, nRow, myExt[1][0], myExt[0][0])
 			pwm = generatePwm(d3.selectAll("#aln_zoom rect"), 20);
 			pwm.drawLogo(YAHOO.util.Dom.get("seqLogo"));
 	}
