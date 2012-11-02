@@ -193,7 +193,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		var lineNW = svg.append("line")
 			.attr("class", "zoomline")
-			.attr("x1", function() { return x(Math.floor(nCol/2) - 10); })
+			.attr("x1", function() { return x(myExt[0][0]); })
 			.attr("y1", function() { return y(-0.15); })
 			.attr("x2", function() { return x(0); })
 			.attr("y2", function() { return -margin.top/2; })
@@ -205,7 +205,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 			.attr("y2", function() { return -margin.top; })
 		var lineNE = svg.append("line")
 			.attr("class", "zoomline")
-			.attr("x1", function() { return x(Math.floor(nCol/2) + 10); })
+			.attr("x1", function() { return x(myExt[1][0]); })
 			.attr("y1", function() { return y(-0.15); })
 			.attr("x2", function() { return x(nCol); })
 			.attr("y2", function() { return -margin.top/2; })
