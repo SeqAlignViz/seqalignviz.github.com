@@ -169,10 +169,10 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 
 		// Create brush
 		if(typeof(brushExt) != 'undefined'){
-			brushExt[0][0] = x.invert(brushExt[0][0])
-			brushExt[0][1] = y.invert(brushExt[0][1])
-			brushExt[1][0] = x.invert(brushExt[1][0])
-			brushExt[1][1] = y.invert(brushExt[1][1])
+			brushExt[0][0] = Math.round(x.invert(brushExt[0][0]))
+			brushExt[0][1] = Math.round(y.invert(brushExt[0][1]))
+			brushExt[1][0] = Math.round(x.invert(brushExt[1][0]))
+			brushExt[1][1] = Math.round(y.invert(brushExt[1][1]))
 		}
 		myExt = brushExt || [[Math.floor(nCol/2) - 10, -0.25], [Math.floor(nCol/2) + 10, nRow]]
 		var brush = d3.svg.brush()
