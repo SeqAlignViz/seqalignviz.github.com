@@ -146,7 +146,7 @@ var drawAlignment = function(aln, rows, cols, divEl, dWidth, dHeight, showText, 
 				.attr("d", d3line2(pathinfo))
 				.attr("id", "zoomPath")
 				.style("fill", "black")
-				.style("opacity", "0.125")
+				.style("opacity", "0.5")
 		}
 		// Callback for brush events
 		function onbrush(p) {
